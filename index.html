@@ -1,43 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Orbix (ORX) DEX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-  <script defer src="wallet.js" type="module"></script>
+  <meta charset="UTF-8">
+  <title>Orbix (ORX) DApp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="module" src="./wallet.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body {
-      background: #0f0f23;
-      color: white;
+      background: radial-gradient(circle at top, #1a1a40, #0f0f23);
       font-family: 'Segoe UI', sans-serif;
     }
     .glass {
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 20px;
       padding: 2rem;
-      backdrop-filter: blur(15px);
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
     }
     .btn-main {
-      background: linear-gradient(to right, #4f46e5, #9333ea);
+      background: linear-gradient(to right, #6d28d9, #9333ea);
       padding: 0.75rem 1.5rem;
       border-radius: 9999px;
+      color: white;
       font-weight: bold;
+      transition: 0.3s;
+    }
+    .btn-main:hover {
+      opacity: 0.9;
+      transform: scale(1.03);
     }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center px-4">
-  <div class="glass max-w-md w-full text-center space-y-6">
-    <h1 class="text-3xl font-bold text-purple-300">Orbix (ORX)</h1>
+<body class="min-h-screen text-white flex items-center justify-center px-4">
+  <div class="glass w-full max-w-2xl space-y-6 text-center">
+    <h1 class="text-4xl font-bold text-purple-300">Orbix (ORX)</h1>
+    <p class="text-gray-300 text-sm leading-relaxed">
+      Orbix is a decentralized ERC-20 token on the Polygon network with staking, transaction fees, and upgradeable features. It enables fixed 2% transaction fees, smart minting, and secure staking pools to ensure long-term profitability and utility.
+    </p>
 
     <button id="connectWalletBtn" class="btn-main">🔗 Connect Wallet</button>
 
-    <div id="walletSection" class="hidden mt-4 space-y-3">
+    <div id="walletSection" class="hidden mt-4 space-y-2">
       <p id="address" class="text-sm text-gray-300"></p>
       <p id="balance" class="text-xl font-semibold text-blue-400"></p>
     </div>
+
+    <a href="./whitepaper.pdf" class="underline text-purple-400 text-sm" target="_blank">📄 View Whitepaper</a>
   </div>
 </body>
 </html>

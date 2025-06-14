@@ -1,0 +1,38 @@
+
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #0f0f0f;
+  color: white;
+  text-align: center;
+}
+header {
+  background-color: #111;
+  padding: 20px;
+}
+.logo {
+  max-height: 100px;
+}
+.features {
+  padding: 40px;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+li {
+  margin: 10px 0;
+}
+.button {
+  background-color: #00c896;
+  color: black;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+}
+footer {
+  background: #111;
+  padding: 20px;
+}

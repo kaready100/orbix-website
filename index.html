@@ -2,25 +2,54 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Orbix Swap</title>
+  <title>Orbix (ORX) DEX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <script type="module" src="./wallet.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background: linear-gradient(145deg, #0f0f23, #1a1a40);
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    }
+    .btn-main {
+      background: linear-gradient(to right, #4f46e5, #9333ea);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .btn-main:hover {
+      opacity: 0.9;
+      transform: scale(1.03);
+    }
+  </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
-  <div class="w-full max-w-lg mx-auto text-center space-y-6">
-    <h1 class="text-4xl font-bold">Orbix (ORX) DEX</h1>
+<body class="text-white min-h-screen flex items-center justify-center px-4">
+  <div class="glass w-full max-w-md text-center space-y-6">
+    <h1 class="text-4xl font-bold text-purple-300">Orbix (ORX)</h1>
 
-    <button id="connectWalletBtn" class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-xl text-lg transition">
-      Connect Wallet
-    </button>
+    <button id="connectWalletBtn" class="btn-main">🔗 Connect Wallet</button>
 
-    <div id="walletSection" class="hidden mt-4 space-y-2">
-      <div id="address" class="text-sm text-gray-300"></div>
-      <div id="balance" class="text-lg font-semibold"></div>
+    <div id="walletSection" class="hidden mt-4 space-y-3">
+      <p id="address" class="text-sm text-gray-300"></p>
+      <p id="balance" class="text-xl font-semibold text-blue-400"></p>
     </div>
 
-    <a href="./whitepaper.pdf" class="text-blue-400 underline" target="_blank">View Whitepaper</a>
+    <a href="./whitepaper.pdf" class="text-sm underline text-purple-400" target="_blank">
+      📄 Read Whitepaper
+    </a>
+    <a href="https://polygonscan.com/token/0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE" target="_blank" class="text-xs text-gray-400">
+      View Contract on PolygonScan
+    </a>
   </div>
 </body>
 </html>

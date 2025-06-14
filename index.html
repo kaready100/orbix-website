@@ -2,212 +2,93 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Orbix Crypto Project</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Orbix (ORX) Token</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
     body {
+      font-family: Arial, sans-serif;
+      background: #0d0d0d;
+      color: #ffffff;
       margin: 0;
-      font-family: 'Orbitron', monospace;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #eee;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      padding: 0;
+      text-align: center;
     }
     header {
-      padding: 1rem 2rem;
-      background: #121b22;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 5px #0008;
+      background: #1a1a1a;
+      padding: 20px 0;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
     }
-    header h1 {
-      margin: 0;
-      font-size: 1.8rem;
-      color: #00ffd5;
+    .container {
+      padding: 50px 20px;
     }
-    #walletBtn {
-      background: #00ffd5;
+    button {
+      padding: 12px 25px;
+      margin: 10px;
       border: none;
-      border-radius: 4px;
-      padding: 0.5rem 1rem;
-      font-weight: bold;
+      border-radius: 5px;
+      background: #f7931a;
+      color: white;
+      font-size: 16px;
       cursor: pointer;
-      color: #121b22;
-      transition: background 0.3s ease;
     }
-    #walletBtn:hover {
-      background: #00b8a9;
-    }
-    main {
-      flex-grow: 1;
-      padding: 2rem;
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    #walletAddress {
-      margin-top: 1rem;
-      font-size: 1.2rem;
-      word-break: break-all;
-      color: #00ffd5;
-    }
-    section.whitepaper {
-      margin-top: 3rem;
-      background: #121b22cc;
-      border-radius: 10px;
-      padding: 1.5rem;
-      box-shadow: 0 0 20px #00ffd5aa;
-      text-align: left;
-      max-height: 500px;
-      overflow-y: auto;
-    }
-    section.whitepaper h2 {
-      color: #00ffd5;
-      margin-bottom: 1rem;
-      border-bottom: 2px solid #00ffd5;
-      padding-bottom: 0.5rem;
-    }
-    section.whitepaper p {
-      line-height: 1.6;
-      margin-bottom: 1rem;
-      color: #ccc;
-    }
-    footer {
-      text-align: center;
-      padding: 1rem 0;
-      background: #121b22;
-      color: #555;
-      font-size: 0.9rem;
-    }
-    a {
-      color: #00ffd5;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
+    button:hover {
+      background: #e67e22;
     }
   </style>
-  <!-- Ethers.js -->
-  <script src="https://cdn.ethers.io/lib/ethers-5.6.umd.min.js" type="application/javascript"></script>
-  <!-- Web3Modal -->
-  <script src="https://unpkg.com/web3modal@1.9.12/dist/index.js"></script>
-  <!-- WalletConnect Provider -->
-  <script src="https://unpkg.com/@walletconnect/web3-provider@1.7.8/dist/umd/index.min.js"></script>
 </head>
 <body>
   <header>
-    <h1>Orbix (ORX) Project</h1>
-    <button id="walletBtn">Connect Wallet</button>
+    <h1>Welcome to Orbix (ORX)</h1>
+    <p>Your Gateway to the Future of DeFi</p>
   </header>
 
-  <main>
-    <div id="walletAddress"></div>
-
-    <section class="whitepaper">
-      <h2>Whitepaper</h2>
-      <p><strong>Orbix (ORX)</strong> is an innovative crypto token project based on the Polygon network, designed to provide staking, minting, and transaction fee functionalities with upgradeable smart contract capabilities.</p>
-      <p>Our goal is to empower users with secure and efficient DeFi solutions, combining modern blockchain tech with user-friendly interfaces.</p>
-      <p>The initial supply is 900 million tokens, with a fixed 2% transaction fee redistributed appropriately.</p>
-      <p>Staking pools offer fixed returns, encouraging long-term holding and participation in governance.</p>
-      <p>For more details, visit our official channels and stay tuned for updates.</p>
-    </section>
-  </main>
-
-  <footer>
-    &copy; 2025 Orbix Crypto Project. All rights reserved.
-  </footer>
+  <div class="container">
+    <h2>Connect Your Wallet</h2>
+    <button onclick="connectWallet()">🔗 Connect Wallet</button>
+    <button onclick="addORXToken()">➕ Add ORX Token to MetaMask</button>
+    <p id="walletAddress"></p>
+  </div>
 
   <script>
-    const providerOptions = {
-      walletconnect: {
-        package: window.WalletConnectProvider.default,
-        options: {
-          rpc: {
-            137: "https://polygon-rpc.com" // Polygon Mainnet RPC URL
-          }
-        }
-      }
-    };
-
-    const web3Modal = new window.Web3Modal.default({
-      cacheProvider: true,
-      providerOptions
-    });
-
-    let provider;
-    let signer;
-
-    const walletBtn = document.getElementById('walletBtn');
-    const walletAddressDiv = document.getElementById('walletAddress');
-
     async function connectWallet() {
-      try {
-        provider = await web3Modal.connect();
-        const web3Provider = new ethers.providers.Web3Provider(provider);
-
-        // چک کردن شبکه پولیژن
-        const network = await web3Provider.getNetwork();
-        if (network.chainId !== 137) {
-          alert("Please switch your wallet network to Polygon Mainnet.");
+      if (window.ethereum) {
+        try {
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          document.getElementById('walletAddress').innerText = 'Connected: ' + accounts[0];
+        } catch (error) {
+          alert('Connection failed!');
+          console.error(error);
         }
-
-        signer = web3Provider.getSigner();
-        const address = await signer.getAddress();
-
-        walletAddressDiv.textContent = `Connected wallet: ${address}`;
-        walletBtn.textContent = 'Disconnect Wallet';
-
-        // وقتی ولت قطع شد، به روز رسانی UI
-        provider.on("accountsChanged", (accounts) => {
-          if (accounts.length === 0) {
-            disconnectWallet();
-          } else {
-            walletAddressDiv.textContent = `Connected wallet: ${accounts[0]}`;
-          }
-        });
-
-        provider.on("chainChanged", (chainId) => {
-          if (parseInt(chainId, 16) !== 137) {
-            alert("Please switch to Polygon Mainnet.");
-          }
-        });
-
-        provider.on("disconnect", () => {
-          disconnectWallet();
-        });
-      } catch (e) {
-        console.error("Could not get a wallet connection", e);
-      }
-    }
-
-    async function disconnectWallet() {
-      if (provider && provider.close) {
-        await provider.close();
-      }
-      await web3Modal.clearCachedProvider();
-      provider = null;
-      signer = null;
-      walletAddressDiv.textContent = '';
-      walletBtn.textContent = 'Connect Wallet';
-    }
-
-    walletBtn.addEventListener('click', async () => {
-      if (!provider) {
-        await connectWallet();
       } else {
-        await disconnectWallet();
+        alert('MetaMask not detected. Please install it.');
       }
-    });
+    }
 
-    // اگر قبلاً ولت متصل بود خودکار وصل شو
-    window.addEventListener('load', async () => {
-      if (web3Modal.cachedProvider) {
-        await connectWallet();
+    async function addORXToken() {
+      try {
+        const wasAdded = await window.ethereum.request({
+          method: 'wallet_watchAsset',
+          params: {
+            type: 'ERC20',
+            options: {
+              address: '0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE',
+              symbol: 'ORX',
+              decimals: 18,
+              image: 'https://orbix-phi.vercel.app/orx-logo.png'
+            },
+          },
+        });
+
+        if (wasAdded) {
+          alert('✅ ORX Token added to MetaMask!');
+        } else {
+          alert('❌ Token addition cancelled.');
+        }
+      } catch (error) {
+        console.error('Error adding token:', error);
+        alert('❌ Failed to add ORX token.');
       }
-    });
+    }
   </script>
 </body>
 </html>

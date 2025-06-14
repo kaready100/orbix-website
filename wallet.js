@@ -1,19 +1,3 @@
-// wallet.js
-
-// Load WalletConnectProvider script dynamically for walletconnect
-function loadWalletConnectProviderScript() {
-  return new Promise((resolve) => {
-    if (window.WalletConnectProvider) {
-      resolve();
-    } else {
-      const script = document.createElement('script');
-      script.src = "https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.7.8/dist/umd/index.min.js";
-      script.onload = () => resolve();
-      document.head.appendChild(script);
-    }
-  });
-}
-
 let web3Modal;
 let provider;
 let signer;
@@ -31,15 +15,13 @@ const providerOptions = {
 };
 
 async function initWallet() {
-  await loadWalletConnectProviderScript();
-
   web3Modal = new window.Web3Modal.default({
     cacheProvider: true,
     providerOptions
   });
 
   if (web3Modal.cachedProvider) {
-    connectWallet();
+    await connectWallet();
   }
 }
 
@@ -75,34 +57,29 @@ async function connectWallet() {
       resetUI();
     });
   } catch (err) {
-    console.error("Could not get a wallet connection", err);
+    console.error("Wallet connection error:", err);
+    alert("Failed to connect wallet.");
   }
 }
 
 function updateUI(address) {
-  const walletInfo = document.getElementById("walletInfo");
-  walletInfo.textContent = `Connected: ${address}`;
+  document.getElementById("walletInfo").textContent = `Connected: ${address}`;
   document.getElementById("walletBtn").textContent = "Disconnect Wallet";
 }
 
 function resetUI() {
-  const walletInfo = document.getElementById("walletInfo");
-  walletInfo.textContent = "Wallet not connected.";
+  document.getElementById("walletInfo").textContent = "Wallet not connected.";
   document.getElementById("walletBtn").textContent = "Connect Wallet";
+  provider = null;
 }
 
 document.getElementById("walletBtn").addEventListener("click", async () => {
   if (provider) {
-    if (web3Modal) {
-      await web3Modal.clearCachedProvider();
-    }
-    if (provider.disconnect && typeof provider.disconnect === "function") {
-      await provider.disconnect();
-    }
-    provider = null;
+    if (web3Modal) await web3Modal.clearCachedProvider();
+    if (provider.disconnect) await provider.disconnect();
     resetUI();
   } else {
-    connectWallet();
+    await connectWallet();
   }
 });
 

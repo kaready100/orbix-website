@@ -3,39 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Orbix (ORX) - Official Site</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <title>Orbix (ORX) - Official Website</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://unpkg.com/web3modal"></script>
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-  <script src="https://unpkg.com/web3modal@1.9.10/dist/index.js"></script>
-  <script src="https://unpkg.com/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
+  <script src="https://unpkg.com/@walletconnect/web3-provider@1.7.8/dist/umd/index.min.js"></script>
 </head>
 <body>
   <header>
-    <h1>Orbix (ORX)</h1>
-    <p>The Future of Secure & Profitable Digital Assets</p>
-    <button id="connectWallet">Connect Wallet</button>
+    <div class="container">
+      <h1>Orbix (ORX)</h1>
+      <button id="connectWallet">Connect Wallet</button>
+    </div>
   </header>
-
-  <section id="walletInfo" class="hidden">
-    <p><strong>Address:</strong> <span id="userAddress"></span></p>
-    <p><strong>Network:</strong> <span id="networkName"></span></p>
-    <p><strong>ORX Balance:</strong> <span id="tokenBalance"></span> ORX</p>
-  </section>
-
-  <section class="intro">
-    <h2>About Orbix</h2>
-    <p>Orbix (ORX) is a next-generation cryptocurrency token designed with advanced staking mechanics, transaction fee rewards, and upgradeable smart contract architecture on the Polygon network.</p>
-  </section>
-
-  <section class="whitepaper">
-    <h2>Whitepaper</h2>
-    <p><a href="whitepaper.html" target="_blank">Read the Whitepaper →</a></p>
-  </section>
-
+  <main>
+    <section class="intro">
+      <h2>The Future of Finance</h2>
+      <p>Orbix (ORX) is a next-generation crypto asset on the Polygon network with staking, low fees, and powerful DeFi integrations.</p>
+    </section>
+    <section class="wallet">
+      <p id="walletAddress">Wallet not connected</p>
+    </section>
+    <section class="about">
+      <h3>About Orbix</h3>
+      <p>Orbix is built to revolutionize decentralized finance with a fast, secure, and upgradeable token. The ORX token includes staking, fixed fees, and long-term growth features for global users.</p>
+    </section>
+  </main>
   <footer>
-    <p>© 2025 Orbix. All rights reserved.</p>
+    <p>&copy; 2025 Orbix Project. All rights reserved.</p>
   </footer>
-
-  <script src="js/app.js"></script>
+  <script src="wallet.js"></script>
 </body>
 </html>

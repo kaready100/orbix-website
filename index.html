@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Orbix (ORX) Wallet Connect</title>
-  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <div class="container">
-    <h1>Orbix (ORX) Token Dashboard</h1>
-    <button id="connectWalletBtn" class="btn">Connect Wallet</button>
+<body class="bg-gradient-to-tr from-blue-900 to-indigo-600 min-h-screen flex items-center justify-center p-4">
+  <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-xl p-8 max-w-md w-full text-white shadow-lg">
+    <h1 class="text-3xl font-bold mb-6 text-center">Orbix (ORX) Token Dashboard</h1>
+    <button id="connectWalletBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition duration-300">Connect Wallet</button>
 
-    <div id="walletSection" class="hidden">
-      <p id="address"></p>
-      <p id="balance"></p>
+    <div id="walletSection" class="hidden mt-8 space-y-2 text-center">
+      <p id="address" class="text-lg break-all"></p>
+      <p id="balance" class="text-xl font-semibold"></p>
     </div>
 
-    <div class="footer">
-      <a href="whitepaper.pdf" target="_blank" class="whitepaper-link">Download Whitepaper</a>
+    <div class="mt-10 text-center">
+      <a href="whitepaper.pdf" target="_blank" class="text-indigo-300 hover:text-indigo-100 underline font-medium">Download Whitepaper</a>
     </div>
   </div>
 

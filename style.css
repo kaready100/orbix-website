@@ -1,42 +1,77 @@
-body {
+/* Reset and base */
+* {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f5f7fa;
-  color: #222;
-  text-align: center;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-header {
-  background-color: #0f172a;
+body {
+  background: linear-gradient(135deg, #1e2a78, #4a90e2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: white;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 20px;
 }
 
-header img {
-  height: 60px;
+.container {
+  background: rgba(255 255 255 / 0.1);
+  backdrop-filter: blur(15px);
+  border-radius: 15px;
+  padding: 30px 40px;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(74, 144, 226, 0.5);
 }
 
-#connectWallet {
-  background-color: #2563eb;
-  color: white;
+h1 {
+  margin-bottom: 25px;
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+.btn {
+  background: #3466ff;
   border: none;
-  padding: 12px 24px;
-  font-size: 1rem;
-  margin-top: 10px;
+  padding: 14px 30px;
+  border-radius: 50px;
+  color: white;
+  font-weight: 600;
+  font-size: 1.1rem;
   cursor: pointer;
-  border-radius: 5px;
+  transition: background 0.3s ease;
+  user-select: none;
 }
 
-#connectWallet:hover {
-  background-color: #1e40af;
+.btn:hover {
+  background: #2a53d9;
 }
 
-.description, .token {
-  padding: 40px 20px;
+#walletSection {
+  margin-top: 30px;
+  font-size: 1.1rem;
+  line-height: 1.5;
 }
 
-a {
-  color: #2563eb;
+.hidden {
+  display: none;
+}
+
+.footer {
+  margin-top: 40px;
+}
+
+.whitepaper-link {
+  color: #87b5ff;
+  font-weight: 600;
   text-decoration: none;
-  font-weight: bold;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.whitepaper-link:hover {
+  border-color: #87b5ff;
 }

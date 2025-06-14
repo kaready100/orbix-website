@@ -57,7 +57,7 @@
 
     if (typeof window.ethereum !== 'undefined') {
       try {
-        statusMessage.textContent = 'Requesting wallet connection...';
+        statusMessage.textContent = 'Requesting wallet connection... Please approve in MetaMask.';
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
 
         if (accounts.length === 0) {
@@ -98,8 +98,13 @@
         });
 
       } catch (error) {
-        console.error('Connection error:', error);
-        statusMessage.textContent = 'Connection rejected or error occurred. Check console.';
+        if (error.code === 4001) {
+          // User rejected request
+          statusMessage.textContent = 'Connection request rejected by user. Please approve to connect.';
+        } else {
+          statusMessage.textContent = 'Error occurred: ' + error.message;
+          console.error(error);
+        }
       }
     } else {
       statusMessage.textContent = 'MetaMask or compatible wallet not detected! Please install it.';

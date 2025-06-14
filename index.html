@@ -3,26 +3,95 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Orbix (ORX) - Wallet Connect & Info</title>
+  <title>Orbix (ORX) - Next Gen Crypto Token</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
     * {
       box-sizing: border-box;
     }
-
     body {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #0a0f2c, #3b185f);
-      color: #eee;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #f0f0f0;
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 20px;
+      padding: 40px 20px;
+    }
+    header {
+      max-width: 900px;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #66fcf1;
+      text-shadow: 0 0 8px #45a29e;
+      margin-bottom: 15px;
+    }
+    header p.subtitle {
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: #c5c6c7;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.5;
     }
 
-    .container {
-      background: rgba(255 255 255 / 0.05);
-      backdrop-filter: blur(10
+    main {
+      max-width: 700px;
+      width: 100%;
+      background: rgba(10, 20, 30, 0.8);
+      border-radius: 16px;
+      padding: 30px 40px;
+      box-shadow: 0 0 30px #45a29eaa;
+    }
+
+    section {
+      margin-bottom: 40px;
+    }
+
+    section h2 {
+      color: #66fcf1;
+      font-weight: 700;
+      font-size: 1.8rem;
+      border-bottom: 2px solid #45a29e;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+
+    section p {
+      line-height: 1.6;
+      color: #c5c6c7;
+      font-size: 1rem;
+    }
+
+    #connectWalletSection {
+      text-align: center;
+    }
+
+    #connectBtn {
+      background: #45a29e;
+      border: none;
+      padding: 16px 32px;
+      font-size: 1.2rem;
+      color: #0b0c10;
+      font-weight: 700;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 0 15px #45a29eaa;
+      transition: background 0.3s ease;
+    }
+
+    #connectBtn:hover {
+      background: #66fcf1;
+      box-shadow: 0 0 20px #66fcf1aa;
+    }
+
+    #walletInfo {
+      margin-top: 25px;

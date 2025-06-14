@@ -1,62 +1,59 @@
 
 body {
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    background: linear-gradient(to right, #1e1e2f, #2e2e4d);
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #0f0f23;
+  color: #eee;
+  line-height: 1.6;
 }
-.container {
-    background: #121224;
-    border-radius: 20px;
-    padding: 40px;
-    max-width: 600px;
-    text-align: center;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+
+header {
+  background: linear-gradient(to right, #1f1f3a, #3d3d7a);
+  padding: 40px 20px;
+  text-align: center;
 }
-h1 {
-    font-size: 2.5em;
-    margin-bottom: 0.2em;
+header h1 {
+  font-size: 3em;
+  margin: 0;
 }
-p.subtitle {
-    font-size: 1em;
-    color: #aaa;
-    margin-bottom: 1.5em;
+header p {
+  font-size: 1.2em;
+  color: #ccc;
 }
 button {
-    padding: 15px 30px;
-    font-size: 1em;
-    background: linear-gradient(to right, #6e33ff, #9e59ff);
-    border: none;
-    border-radius: 10px;
-    color: #fff;
-    cursor: pointer;
+  background: #ff5c5c;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  color: white;
+  border-radius: 8px;
+  margin-top: 20px;
+  cursor: pointer;
 }
-.section {
-    margin-top: 2em;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+button:hover {
+  background: #ff3d3d;
 }
-.box {
-    flex: 1 1 45%;
-    margin: 10px;
-    background-color: #1b1b33;
-    border-radius: 10px;
-    padding: 20px;
+
+main {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
 }
 .wallet-info {
-    margin-top: 20px;
-    padding: 15px;
-    background: #181833;
-    border-radius: 8px;
-    font-size: 0.9em;
-    text-align: left;
+  background: #1c1c3a;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
 }
-.connected {
-    color: #00ff99;
+.about, .tokenomics {
+  margin-bottom: 30px;
+}
+.tokenomics ul {
+  padding-left: 20px;
+}
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #1c1c3a;
+  color: #777;
 }

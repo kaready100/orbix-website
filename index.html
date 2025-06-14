@@ -4,91 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Orbix (ORX) Token</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0d0d0d;
-      color: #ffffff;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-    header {
-      background: #1a1a1a;
-      padding: 20px 0;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    }
-    .container {
-      padding: 50px 20px;
-    }
-    button {
-      padding: 12px 25px;
-      margin: 10px;
-      border: none;
-      border-radius: 5px;
-      background: #f7931a;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #e67e22;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+  <script type="module" src="script.js" defer></script>
 </head>
 <body>
   <header>
-    <h1>Welcome to Orbix (ORX)</h1>
-    <p>Your Gateway to the Future of DeFi</p>
+    <img src="assets/logo.png" alt="Orbix Logo" />
+    <h1>Orbix (ORX)</h1>
+    <button id="connectWallet">Connect Wallet</button>
   </header>
 
-  <div class="container">
-    <h2>Connect Your Wallet</h2>
-    <button onclick="connectWallet()">🔗 Connect Wallet</button>
-    <button onclick="addORXToken()">➕ Add ORX Token to MetaMask</button>
-    <p id="walletAddress"></p>
-  </div>
+  <section class="description">
+    <h2>About Orbix</h2>
+    <p>
+      Orbix (ORX) is a revolutionary cryptocurrency designed for staking, fast transactions, and growth through community. Built on the Polygon network, ORX brings low fees and high scalability to DeFi.
+    </p>
+    <a href="whitepaper.pdf" target="_blank">Read our Whitepaper</a>
+  </section>
 
-  <script>
-    async function connectWallet() {
-      if (window.ethereum) {
-        try {
-          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-          document.getElementById('walletAddress').innerText = 'Connected: ' + accounts[0];
-        } catch (error) {
-          alert('Connection failed!');
-          console.error(error);
-        }
-      } else {
-        alert('MetaMask not detected. Please install it.');
-      }
-    }
+  <section class="token">
+    <h2>Your ORX Balance</h2>
+    <p id="balance">Connect wallet to view balance.</p>
+  </section>
 
-    async function addORXToken() {
-      try {
-        const wasAdded = await window.ethereum.request({
-          method: 'wallet_watchAsset',
-          params: {
-            type: 'ERC20',
-            options: {
-              address: '0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE',
-              symbol: 'ORX',
-              decimals: 18,
-              image: 'https://orbix-phi.vercel.app/orx-logo.png'
-            },
-          },
-        });
-
-        if (wasAdded) {
-          alert('✅ ORX Token added to MetaMask!');
-        } else {
-          alert('❌ Token addition cancelled.');
-        }
-      } catch (error) {
-        console.error('Error adding token:', error);
-        alert('❌ Failed to add ORX token.');
-      }
-    }
-  </script>
+  <footer>
+    <p>&copy; 2025 Orbix Token. All rights reserved.</p>
+  </footer>
 </body>
 </html>

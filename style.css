@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f7fa;
+  color: #222;
+  text-align: center;
+}
+
+header {
+  background-color: #0f172a;
+  color: white;
+  padding: 20px;
+}
+
+header img {
+  height: 60px;
+}
+
+#connectWallet {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#connectWallet:hover {
+  background-color: #1e40af;
+}
+
+.description, .token {
+  padding: 40px 20px;
+}
+
+a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: bold;
+}

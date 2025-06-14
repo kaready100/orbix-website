@@ -1,37 +1,234 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Orbix - The Future of DeFi</title>
-  <link rel="stylesheet" href="style.css"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Orbix - Your Gateway to ORX Token</title>
+
+<!-- Web3.js and Web3Modal -->
+<script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
+<script src="https://unpkg.com/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
+<script src="https://unpkg.com/web3modal"></script>
+
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+    color: #fff;
+    margin: 0; padding: 20px; min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  h1 {
+    margin-bottom: 10px;
+    font-size: 2.8rem;
+    letter-spacing: 2px;
+  }
+  #connectButton {
+    margin: 15px 0 30px;
+    padding: 14px 40px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
+    color: white;
+    transition: background 0.3s ease;
+  }
+  #connectButton:hover {
+    background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%);
+  }
+  #walletInfo, #priceInfo, #projectIntro, #roadmap, #faq, #security {
+    background: rgba(255 255 255 / 0.1);
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    max-width: 500px;
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 25px;
+  }
+  #walletInfo p, #priceInfo p, #projectIntro p, #roadmap p, #faq p, #security p {
+    margin: 10px 0;
+    word-break: break-word;
+  }
+  h2 {
+    margin-top: 0;
+    border-bottom: 2px solid #00c6ff;
+    padding-bottom: 6px;
+  }
+  ul {
+    padding-left: 20px;
+  }
+  li {
+    margin-bottom: 8px;
+  }
+  @media (max-width: 550px) {
+    body {
+      padding: 15px 10px;
+    }
+    h1 {
+      font-size: 2rem;
+    }
+    #connectButton {
+      padding: 12px 30px;
+      font-size: 1rem;
+    }
+    #walletInfo, #priceInfo, #projectIntro, #roadmap, #faq, #security {
+      max-width: 100%;
+      padding: 15px;
+    }
+  }
+</style>
 </head>
 <body>
-  <header>
-    <img src="logo.png" alt="Orbix Logo" class="logo"/>
-    <h1>Orbix (ORX)</h1>
-    <p>Upgrade your financial freedom.</p>
-  </header>
 
-  <main>
-    <section class="features">
-      <h2>Why Orbix?</h2>
-      <ul>
-        <li>✅ Upgradeable ERC-20 Token</li>
-        <li>✅ Staking with Fixed Returns</li>
-        <li>✅ 2% Transaction Fee Mechanism</li>
-        <li>✅ Ready for Listing on DEXs like Uniswap</li>
-      </ul>
-    </section>
+<h1>Orbix - ORX Token Portal</h1>
+<button id="connectButton">Connect Wallet</button>
 
-    <section class="cta">
-      <a href="#" class="button">Stake Now</a>
-    </section>
-  </main>
+<div id="walletInfo">
+  <h2>Wallet Information</h2>
+  <p id="walletAddress">Wallet Address: Not connected</p>
+  <p id="tokenBalance">ORX Token Balance: ---</p>
+</div>
 
-  <footer>
-    <p>© 2025 Orbix Finance. All rights reserved.</p>
-  </footer>
+<div id="priceInfo">
+  <h2>ORX Token Price</h2>
+  <p id="tokenPrice">Loading price...</p>
+</div>
+
+<div id="projectIntro">
+  <h2>About Orbix</h2>
+  <p>Orbix (ORX) is an innovative international crypto token built on Polygon network, featuring staking, fixed transaction fees, and upgradeable smart contracts designed for secure and efficient DeFi experiences.</p>
+</div>
+
+<div id="roadmap">
+  <h2>Roadmap</h2>
+  <ul>
+    <li>Q2 2025: Token development and smart contract deployment</li>
+    <li>Q3 2025: Website launch & wallet integration</li>
+    <li>Q4 2025: Listing on major DEXs (Uniswap, PancakeSwap)</li>
+    <li>Q1 2026: Launch staking pools and profit-sharing</li>
+    <li>Q2 2026: Expanding ecosystem & partnerships</li>
+  </ul>
+</div>
+
+<div id="faq">
+  <h2>FAQ</h2>
+  <p><strong>How do I connect my wallet?</strong><br />Click the "Connect Wallet" button and select your wallet from the options.</p>
+  <p><strong>Which wallets are supported?</strong><br />MetaMask, WalletConnect-compatible wallets like Trust Wallet, Rainbow, and more.</p>
+  <p><strong>How can I see my ORX balance?</strong><br />Once connected, your ORX balance on Polygon will display automatically.</p>
+</div>
+
+<div id="security">
+  <h2>Security Tips</h2>
+  <ul>
+    <li>Never share your private keys or seed phrases.</li>
+    <li>Always verify URLs before connecting wallets.</li>
+    <li>Use trusted wallets and keep software updated.</li>
+  </ul>
+</div>
+
+<script>
+  const tokenAddress = "0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE";
+  const tokenABI = [
+    {
+      constant: true,
+      inputs: [{ name: "owner", type: "address" }],
+      name: "balanceOf",
+      outputs: [{ name: "", type: "uint256" }],
+      type: "function"
+    },
+    {
+      constant: true,
+      inputs: [],
+      name: "decimals",
+      outputs: [{ name: "", type: "uint8" }],
+      type: "function"
+    }
+  ];
+
+  let web3;
+  let provider;
+  let selectedAccount;
+
+  const providerOptions = {
+    walletconnect: {
+      package: window.WalletConnectProvider.default,
+      options: {
+        rpc: {
+          137: "https://polygon-rpc.com"
+        },
+        chainId: 137
+      }
+    }
+  };
+
+  const web3Modal = new window.Web3Modal.default({
+    cacheProvider: false,
+    providerOptions
+  });
+
+  const connectButton = document.getElementById("connectButton");
+  const walletAddressElem = document.getElementById("walletAddress");
+  const tokenBalanceElem = document.getElementById("tokenBalance");
+  const tokenPriceElem = document.getElementById("tokenPrice");
+
+  async function refreshBalance() {
+    if (!web3 || !selectedAccount) return;
+    try {
+      const contract = new web3.eth.Contract(tokenABI, tokenAddress);
+      const decimals = await contract.methods.decimals().call();
+      const balance = await contract.methods.balanceOf(selectedAccount).call();
+      const formattedBalance = balance / Math.pow(10, decimals);
+      tokenBalanceElem.textContent = "ORX Token Balance: " + formattedBalance.toFixed(4);
+    } catch (error) {
+      tokenBalanceElem.textContent = "Failed to fetch balance";
+    }
+  }
+
+  async function fetchPrice() {
+    try {
+      // You can replace this with your own API or DEX price source
+      const res = await fetch("https://api.coingecko.com/api/v3/simple/token_price/polygon-pos?contract_addresses=" + tokenAddress + "&vs_currencies=usd");
+      const data = await res.json();
+      const price = data[tokenAddress.toLowerCase()]?.usd || 0;
+      tokenPriceElem.textContent = price > 0 ? `$${price.toFixed(4)} USD` : "Price not available";
+    } catch {
+      tokenPriceElem.textContent = "Failed to load price";
+    }
+  }
+
+  connectButton.onclick = async () => {
+    try {
+      provider = await web3Modal.connect();
+      web3 = new Web3(provider);
+      const accounts = await web3.eth.getAccounts();
+      selectedAccount = accounts[0];
+      walletAddressElem.textContent = "Wallet Address: " + selectedAccount;
+      await refreshBalance();
+
+      // Listen for account or chain changes
+      provider.on("accountsChanged", (accounts) => {
+        selectedAccount = accounts[0];
+        walletAddressElem.textContent = "Wallet Address: " + selectedAccount;
+        refreshBalance();
+      });
+      provider.on("chainChanged", () => {
+        refreshBalance();
+      });
+      provider.on("disconnect", () => {
+        walletAddressElem.textContent = "Wallet Address: Not connected";
+        tokenBalanceElem.textContent = "ORX Token Balance: ---";
+      });
+    } catch (error) {
+      walletAddressElem.textContent = "Connection failed";
+      tokenBalanceElem.textContent = "---";
+    }
+  };
+
+  // Initial fetch of token price every 60 seconds
+  fetchPrice();
+  setInterval(fetchPrice, 60000);
+</script>
+
 </body>
 </html>

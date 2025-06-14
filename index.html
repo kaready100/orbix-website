@@ -3,25 +3,282 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Orbix (ORX) Wallet Connect</title>
+<title>Orbix (ORX) Crypto Dashboard</title>
 <style>
-  body { font-family: Arial, sans-serif; margin: 30px; }
-  #walletBtn {
-    padding: 10px 20px; background: #2b6cb0; color: white; border: none; border-radius: 5px; cursor: pointer;
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
+  /* Reset & base */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
   }
-  #walletInfo { margin-top: 15px; font-weight: bold; }
+
+  body {
+    background: linear-gradient(135deg, #0d0221, #1a0033);
+    color: #eee;
+    font-family: 'Orbitron', monospace, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px;
+  }
+
+  h1 {
+    font-size: 3rem;
+    color: #9b5de5;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #9b5de5;
+  }
+
+  .wallet-section {
+    background: #130f40cc;
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #9b5de5aa;
+    width: 350px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  #walletBtn {
+    background: #6f42c1;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background 0.3s ease;
+    box-shadow: 0 0 15px #6f42c1aa;
+  }
+  #walletBtn:hover {
+    background: #a174ff;
+    box-shadow: 0 0 25px #a174ffcc;
+  }
+
+  #walletInfo {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: #b3a1ff;
+    word-break: break-word;
+  }
+
+  .token-info {
+    background: #1f1a3dcc;
+    padding: 25px 30px;
+    border-radius: 15px;
+    width: 350px;
+    box-shadow: 0 0 15px #6f42c1aa;
+    text-align: center;
+  }
+
+  .token-info h2 {
+    color: #ff79c6;
+    margin-bottom: 10px;
+    font-size: 2rem;
+    text-shadow: 0 0 8px #ff79c6bb;
+  }
+
+  .token-info p {
+    font-size: 1.1rem;
+    color: #d3b6ff;
+    margin-bottom: 20px;
+  }
+
+  .btn-whitepaper {
+    background: transparent;
+    border: 2px solid #ff79c6;
+    color: #ff79c6;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px #ff79c6aa;
+  }
+  .btn-whitepaper:hover {
+    background: #ff79c6;
+    color: #1a0033;
+    box-shadow: 0 0 25px #ff79c6ee;
+  }
+
+  /* Modal */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background: rgba(10, 0, 25, 0.9);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .modal-content {
+    background: #2b2165;
+    padding: 25px;
+    border-radius: 20px;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    color: #eee;
+    box-shadow: 0 0 25px #9b5de5bb;
+    font-family: 'Courier New', Courier, monospace;
+    white-space: pre-wrap;
+  }
+
+  .modal-close {
+    float: right;
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: #ff79c6;
+    font-weight: bold;
+  }
 </style>
 </head>
 <body>
 
-<h1>Orbix (ORX) Wallet Connect</h1>
-<button id="walletBtn">Connect Wallet</button>
-<div id="walletInfo">Wallet not connected.</div>
+<h1>Orbix (ORX)</h1>
+
+<div class="wallet-section">
+  <button id="walletBtn">Connect Wallet</button>
+  <div id="walletInfo">Wallet not connected.</div>
+</div>
+
+<div class="token-info">
+  <h2>ORX Token</h2>
+  <p>Symbol: ORX</p>
+  <p>Total Supply: 900,000,000</p>
+  <button class="btn-whitepaper" id="openWhitepaperBtn">View Whitepaper</button>
+</div>
+
+<!-- Modal Whitepaper -->
+<div class="modal" id="whitepaperModal">
+  <div class="modal-content">
+    <span class="modal-close" id="closeWhitepaperBtn">&times;</span>
+    <h3>Orbix (ORX) Whitepaper</h3>
+    <p>
+      اینجا متن وایت پیپر خودتو اینجا بذار، یا لینک دانلود قرار بده.
+      برای نمونه این یک متن ساده است:
+      
+      Orbix (ORX) is a next-gen cryptocurrency token on Polygon blockchain...
+      
+      [این بخش رو خودت با متن اصلی وایت پیپر جایگزین کن]
+    </p>
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/web3modal@1.9.8/dist/index.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.7.8/dist/umd/index.min.js"></script>
-<script src="wallet.js"></script>
+<script>
+  let web3Modal;
+  let provider;
+  let signer;
+
+  const providerOptions = {
+    walletconnect: {
+      package: window.WalletConnectProvider,
+      options: {
+        rpc: {
+          137: "https://polygon-rpc.com"
+        },
+        chainId: 137,
+      }
+    }
+  };
+
+  async function initWallet() {
+    web3Modal = new window.Web3Modal.default({
+      cacheProvider: true,
+      providerOptions
+    });
+
+    if (web3Modal.cachedProvider) {
+      await connectWallet();
+    }
+  }
+
+  async function connectWallet() {
+    try {
+      provider = await web3Modal.connect();
+      const ethersProvider = new ethers.providers.Web3Provider(provider);
+
+      const network = await ethersProvider.getNetwork();
+      if (network.chainId !== 137) {
+        alert("Please switch your wallet network to Polygon Mainnet.");
+      }
+
+      signer = ethersProvider.getSigner();
+      const address = await signer.getAddress();
+      updateUI(address);
+
+      provider.on("accountsChanged", (accounts) => {
+        if (accounts.length === 0) {
+          resetUI();
+        } else {
+          updateUI(accounts[0]);
+        }
+      });
+
+      provider.on("chainChanged", (chainId) => {
+        if (parseInt(chainId, 16) !== 137) {
+          alert("Please switch your wallet network to Polygon Mainnet.");
+        }
+      });
+
+      provider.on("disconnect", () => {
+        resetUI();
+      });
+    } catch (err) {
+      console.error("Wallet connection error:", err);
+      alert("Failed to connect wallet.");
+    }
+  }
+
+  function updateUI(address) {
+    document.getElementById("walletInfo").textContent = `Connected: ${address}`;
+    document.getElementById("walletBtn").textContent = "Disconnect Wallet";
+  }
+
+  function resetUI() {
+    document.getElementById("walletInfo").textContent = "Wallet not connected.";
+    document.getElementById("walletBtn").textContent = "Connect Wallet";
+    provider = null;
+  }
+
+  document.getElementById("walletBtn").addEventListener("click", async () => {
+    if (provider) {
+      if (web3Modal) await web3Modal.clearCachedProvider();
+      if (provider.disconnect) await provider.disconnect();
+      resetUI();
+    } else {
+      await connectWallet();
+    }
+  });
+
+  initWallet();
+
+  // Modal controls
+  const modal = document.getElementById("whitepaperModal");
+  const openBtn = document.getElementById("openWhitepaperBtn");
+  const closeBtn = document.getElementById("closeWhitepaperBtn");
+
+  openBtn.onclick = () => {
+    modal.style.display = "flex";
+  };
+
+  closeBtn.onclick = () => {
+    modal.style.display = "none";
+  };
+
+  window.onclick = (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  };
+</script>
 
 </body>
 </html>

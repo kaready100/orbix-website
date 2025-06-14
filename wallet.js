@@ -10,7 +10,6 @@ const ORX_ABI = [
   "function decimals() view returns (uint8)"
 ];
 
-// جایگزین کردن projectId شما
 const WALLETCONNECT_PROJECT_ID = "c5f160fc1c2fc9783c7ee1cd12402130";
 
 const { chains, publicClient } = configureChains(
@@ -37,7 +36,12 @@ const modal = new Web3Modal(
   ethereumClient
 );
 
-document.getElementById("connectWalletBtn").addEventListener("click", async () => {
+const connectBtn = document.getElementById("connectWalletBtn");
+const walletSection = document.getElementById("walletSection");
+const addressEl = document.getElementById("address");
+const balanceEl = document.getElementById("balance");
+
+connectBtn.addEventListener("click", async () => {
   try {
     await modal.openModal();
 
@@ -50,9 +54,9 @@ document.getElementById("connectWalletBtn").addEventListener("click", async () =
     const decimals = await token.decimals();
     const formatted = ethers.utils.formatUnits(balance, decimals);
 
-    document.getElementById("walletSection").classList.remove("hidden");
-    document.getElementById("address").innerText = `Wallet: ${userAddress}`;
-    document.getElementById("balance").innerText = `ORX Balance: ${formatted}`;
+    walletSection.classList.remove("hidden");
+    addressEl.textContent = `Wallet: ${userAddress}`;
+    balanceEl.textContent = `ORX Balance: ${formatted}`;
   } catch (err) {
     console.error("Wallet connection failed:", err);
     alert("Could not connect to wallet.");

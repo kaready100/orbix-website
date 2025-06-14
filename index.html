@@ -1,91 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Orbix Wallet Connect</title>
-    <script src="https://unpkg.com/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
-    <script src="https://unpkg.com/web3modal@1.9.12/dist/index.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
-    <style>
-      body {
-        background: #0f172a;
-        color: #fff;
-        font-family: sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Orbix (ORX) Token</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
+  <script src="https://unpkg.com/web3modal@1.9.12/dist/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: white;
+      line-height: 1.6;
+    }
+    header {
+      padding: 30px;
+      text-align: center;
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+    }
+    header h1 {
+      font-size: 36px;
+      font-weight: 800;
+    }
+    header p {
+      font-size: 18px;
+      color: #cbd5e1;
+      margin-top: 10px;
+    }
+    .container {
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    h2 {
+      font-size: 28px;
+      margin-bottom: 12px;
+      color: #60a5fa;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    button {
+      background: #6366f1;
+      color: white;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    button:hover {
+      background: #4f46e5;
+    }
+    .wallet-info {
+      margin-top: 20px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      word-break: break-word;
+    }
+    footer {
+      padding: 20px;
+      text-align: center;
+      background: #0f172a;
+      font-size: 14px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
 
-      button {
-        padding: 12px 24px;
-        font-size: 1.1rem;
-        background-color: #6366f1;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        color: white;
-      }
+  <header>
+    <h1>Orbix (ORX) Token</h1>
+    <p>The future of decentralized finance, built on the Polygon Network.</p>
+  </header>
 
-      #walletAddress {
-        margin-top: 20px;
-        word-break: break-all;
-        color: #10b981;
-        font-size: 1rem;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Connect Wallet to Orbix</h1>
-    <button onclick="connect()">Connect Wallet</button>
-    <div id="walletAddress"></div>
+  <div class="container">
 
-    <script>
-      let web3Modal;
-      let provider;
-      let selectedAccount;
+    <div class="section">
+      <h2>🌐 About Orbix</h2>
+      <p>Orbix (ORX) is a powerful, community-driven cryptocurrency designed to transform the world of digital assets. With a total supply of 900 million tokens, Orbix empowers users through decentralized staking, low transaction fees, and fast, secure transactions on the Polygon network.</p>
+    </div>
 
-      async function init() {
-        const providerOptions = {
-          walletconnect: {
-            package: window.WalletConnectProvider.default,
-            options: {
-              rpc: {
-                137: "https://polygon-rpc.com" // Polygon
-              },
-              chainId: 137
-            }
+    <div class="section">
+      <h2>🚀 Token Features</h2>
+      <ul>
+        <li>✅ Total Supply: 900,000,000 ORX</li>
+        <li>💸 Fixed 2% transaction fee sent to project treasury</li>
+        <li>🔒 Staking with fixed returns</li>
+        <li>⚡ Deployed on the Polygon mainnet</li>
+        <li>🔁 Upgradeable smart contract for future features</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>🔗 Connect Your Wallet</h2>
+      <button onclick="connect()">Connect Wallet</button>
+      <div class="wallet-info" id="walletAddress">Wallet not connected</div>
+      <div class="wallet-info" id="networkStatus"></div>
+    </div>
+
+  </div>
+
+  <footer>
+    &copy; 2025 Orbix Token | Built on Polygon | All rights reserved.
+  </footer>
+
+  <script>
+    let web3Modal;
+    let provider;
+    let web3;
+    let selectedAccount;
+
+    async function init() {
+      const providerOptions = {
+        walletconnect: {
+          package: window.WalletConnectProvider.default,
+          options: {
+            rpc: {
+              137: "https://polygon-rpc.com"
+            },
+            chainId: 137
           }
-        };
-
-        web3Modal = new window.Web3Modal.default({
-          cacheProvider: false,
-          providerOptions,
-        });
-      }
-
-      async function connect() {
-        try {
-          provider = await web3Modal.connect();
-          const web3 = new Web3(provider);
-
-          const accounts = await web3.eth.getAccounts();
-          selectedAccount = accounts[0];
-          document.getElementById("walletAddress").innerText = `Connected: ${selectedAccount}`;
-
-          const chainId = await web3.eth.getChainId();
-          if (chainId !== 137) {
-            alert("Please switch to the Polygon network!");
-          }
-        } catch (e) {
-          console.error("Could not connect to wallet", e);
         }
-      }
+      };
 
-      window.addEventListener("load", async () => {
-        init();
+      web3Modal = new window.Web3Modal.default({
+        cacheProvider: false,
+        providerOptions
       });
-    </script>
-  </body>
+    }
+
+    async function connect() {
+      try {
+        provider = await web3Modal.connect();
+        web3 = new Web3(provider);
+        const accounts = await web3.eth.getAccounts();
+        selectedAccount = accounts[0];
+        document.getElementById("walletAddress").innerText = "Connected wallet: " + selectedAccount;
+
+        const chainId = await web3.eth.getChainId();
+        if (chainId !== 137) {
+          document.getElementById("networkStatus").innerText = "⚠ Please switch to Polygon Network!";
+        } else {
+          document.getElementById("networkStatus").innerText = "✅ Connected to Polygon Network.";
+        }
+
+        provider.on("accountsChanged", (accounts) => {
+          selectedAccount = accounts[0];
+          document.getElementById("walletAddress").innerText = "Connected wallet: " + selectedAccount;
+        });
+
+        provider.on("chainChanged", (chainId) => {
+          if (parseInt(chainId, 16) !== 137) {
+            document.getElementById("networkStatus").innerText = "⚠ Please switch to Polygon Network!";
+          } else {
+            document.getElementById("networkStatus").innerText = "✅ Connected to Polygon Network.";
+          }
+        });
+
+      } catch (e) {
+        console.error("Connection failed:", e);
+        document.getElementById("walletAddress").innerText = "❌ Connection failed.";
+      }
+    }
+
+    window.addEventListener('load', init);
+  </script>
+
+</body>
 </html>

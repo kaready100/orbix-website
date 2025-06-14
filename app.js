@@ -3,14 +3,24 @@ const providerOptions = {
   walletconnect: {
     package: window.WalletConnectProvider.default,
     options: {
-      infuraId: "1e389cd3f87b4e889a60f711fde4cddb"
+      rpc: {
+        137: "https://polygon-rpc.com"
+      },
     }
+  },
+  injected: {
+    display: {
+      name: "MetaMask",
+      description: "Connect using MetaMask"
+    },
+    package: null
   }
 };
 
 const web3Modal = new window.Web3Modal.default({
   cacheProvider: false,
-  providerOptions
+  providerOptions,
+  theme: "dark"
 });
 
 const ORX_TOKEN_ADDRESS = "0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE";
@@ -36,6 +46,6 @@ document.getElementById("connectWallet").onclick = async () => {
     document.getElementById("tokenBalance").innerText = balance;
     document.getElementById("walletInfo").classList.remove("hidden");
   } catch (err) {
-    console.error("Connection failed:", err);
+    console.error("Wallet connection failed:", err);
   }
 };

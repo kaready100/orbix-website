@@ -3,32 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Orbix (ORX) Token</title>
+  <title>Orbix (ORX) Token Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
 </head>
-<body class="bg-gradient-to-r from-blue-900 via-purple-900 to-pink-900 min-h-screen flex flex-col items-center justify-center px-6 text-gray-100">
+<body class="bg-gradient-to-r from-indigo-900 via-purple-900 to-pink-900 min-h-screen flex flex-col items-center justify-start px-6 py-12 text-gray-100">
 
-  <header class="text-center max-w-3xl mb-12">
+  <header class="text-center max-w-4xl mb-16">
     <h1 class="text-5xl font-bold mb-4 tracking-wide text-green-400">Orbix (ORX) Token</h1>
-    <p class="text-lg text-gray-300 max-w-xl mx-auto leading-relaxed">
-      Orbix is a revolutionary crypto token on Polygon blockchain designed for fast, low-cost transactions with staking and fees features.
-      Connect your wallet to check your balance and get started!
+    <p class="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
+      Orbix is an innovative crypto token on the Polygon blockchain designed for fast, low-cost transactions, staking, and fair fees.
+      Connect your wallet below to view your balance and interact with the token.
     </p>
   </header>
 
-  <main class="bg-gray-800 bg-opacity-80 rounded-2xl shadow-lg p-8 w-full max-w-md">
-    <button id="connectWalletBtn" class="w-full bg-green-500 hover:bg-green-600 transition rounded-md py-3 text-lg font-semibold mb-6">
+  <main class="bg-gray-800 bg-opacity-90 rounded-3xl shadow-lg p-10 w-full max-w-lg">
+    <button id="connectWalletBtn" class="w-full bg-green-500 hover:bg-green-600 transition rounded-lg py-4 text-xl font-semibold mb-8">
       Connect Wallet
     </button>
 
-    <div id="statusMessage" class="text-center text-sm mb-4 font-mono break-all min-h-[1.5em]"></div>
-    <div id="walletAddress" class="text-center text-sm mb-4 font-mono break-all"></div>
+    <div id="statusMessage" class="text-center text-sm mb-4 font-mono break-words min-h-[1.5em]"></div>
+    <div id="walletAddress" class="text-center text-sm mb-4 font-mono break-words"></div>
     <div id="tokenBalance" class="text-center text-lg font-semibold mb-4"></div>
     <div id="tokenPrice" class="text-center text-green-400 font-bold text-xl"></div>
   </main>
 
-  <footer class="mt-12 text-gray-500 text-sm">
+  <footer class="mt-20 text-gray-500 text-sm">
     &copy; 2025 Orbix. All rights reserved.
   </footer>
 
@@ -51,14 +51,17 @@
 
   async function connectWallet() {
     statusMessage.textContent = '';
+    walletAddressDiv.textContent = '';
+    tokenBalanceDiv.textContent = '';
+    tokenPriceDiv.textContent = '';
+
     if (typeof window.ethereum !== 'undefined') {
       try {
         statusMessage.textContent = 'Requesting wallet connection...';
-        console.log('Ethereum detected');
-
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+
         if (accounts.length === 0) {
-          statusMessage.textContent = 'No accounts found.';
+          statusMessage.textContent = 'No wallet accounts found.';
           return;
         }
 
@@ -66,7 +69,7 @@
         signer = provider.getSigner();
 
         const address = accounts[0];
-        walletAddressDiv.textContent = 'Connected wallet: ' + address;
+        walletAddressDiv.textContent = `Connected wallet: ${address}`;
         connectWalletBtn.style.display = 'none';
         statusMessage.textContent = 'Wallet connected successfully!';
 
@@ -74,10 +77,12 @@
         await updateTokenBalance(address);
         await updateTokenPrice();
 
+        // Handle account change
         window.ethereum.on('accountsChanged', async (accounts) => {
           if (accounts.length > 0) {
-            walletAddressDiv.textContent = 'Connected wallet: ' + accounts[0];
-            await updateTokenBalance(accounts[0]);
+            const newAddress = accounts[0];
+            walletAddressDiv.textContent = `Connected wallet: ${newAddress}`;
+            await updateTokenBalance(newAddress);
             statusMessage.textContent = 'Account changed.';
           } else {
             walletAddressDiv.textContent = '';
@@ -87,19 +92,17 @@
           }
         });
 
-        window.ethereum.on('chainChanged', (chainId) => {
-          console.log('Chain changed to:', chainId);
+        // Handle network change
+        window.ethereum.on('chainChanged', () => {
           statusMessage.textContent = 'Network changed. Please refresh the page.';
         });
 
       } catch (error) {
-        console.error('Error connecting wallet:', error);
+        console.error('Connection error:', error);
         statusMessage.textContent = 'Connection rejected or error occurred. Check console.';
       }
     } else {
-      statusMessage.textContent = 'MetaMask or compatible wallet not detected!';
-      walletAddressDiv.textContent = '';
-      tokenBalanceDiv.textContent = '';
+      statusMessage.textContent = 'MetaMask or compatible wallet not detected! Please install it.';
     }
   }
 
@@ -107,128 +110,17 @@
     try {
       const balance = await contract.balanceOf(address);
       const decimals = await contract.decimals();
-      const formatted = ethers.utils.formatUnits(balance, decimals);
-      tokenBalanceDiv.textContent = `ORX Token Balance: ${formatted}`;
-    } catch (err) {
-      console.error('Error fetching balance:', err);
+      const formattedBalance = ethers.utils.formatUnits(balance, decimals);
+      tokenBalanceDiv.textContent = `ORX Token Balance: ${formattedBalance}`;
+    } catch (error) {
+      console.error('Error fetching balance:', error);
       tokenBalanceDiv.textContent = 'Failed to load token balance';
     }
   }
 
   async function updateTokenPrice() {
-    try {
-      // اگر قیمت توکن هنوز تو CoinGecko نیست، N/A نمایش می‌دهیم
-      let price = 'N/A';
-      tokenPriceDiv.textContent = `Token Price: $${price}`;
-    } catch {
-      tokenPriceDiv.textContent = 'Token Price: N/A';
-    }
-  }
-
-  connectWalletBtn.addEventListener('click', connectWallet);
-</script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Orbix (ORX) Token Dashboard</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
-</head>
-<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col items-center justify-center px-4">
-
-  <header class="mb-10 text-center">
-    <h1 class="text-4xl font-extrabold text-green-400 tracking-wide mb-2">Orbix (ORX)</h1>
-    <p class="text-gray-400">Your Gateway to the Future of Finance</p>
-  </header>
-
-  <main class="bg-gray-800 rounded-xl shadow-lg p-8 w-full max-w-md">
-    <button id="connectWalletBtn" class="w-full bg-green-500 hover:bg-green-600 transition rounded-md py-3 text-lg font-semibold mb-6">
-      Connect Wallet
-    </button>
-
-    <div id="walletAddress" class="text-center text-sm font-mono break-all mb-4"></div>
-    <div id="tokenBalance" class="text-center text-lg font-semibold mb-4"></div>
-    <div id="tokenPrice" class="text-center text-green-400 font-bold text-xl"></div>
-  </main>
-
-  <footer class="mt-12 text-gray-600 text-sm">
-    &copy; 2025 Orbix. All rights reserved.
-  </footer>
-
-<script>
-  const connectWalletBtn = document.getElementById('connectWalletBtn');
-  const walletAddressDiv = document.getElementById('walletAddress');
-  const tokenBalanceDiv = document.getElementById('tokenBalance');
-  const tokenPriceDiv = document.getElementById('tokenPrice');
-
-  const ORX_CONTRACT_ADDRESS = '0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE';
-  const ERC20_ABI = [
-    "function balanceOf(address owner) view returns (uint256)",
-    "function decimals() view returns (uint8)"
-  ];
-
-  let provider;
-  let signer;
-  let contract;
-
-  async function connectWallet() {
-    if (typeof window.ethereum !== 'undefined') {
-      try {
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
-        provider = new ethers.providers.Web3Provider(window.ethereum);
-        signer = provider.getSigner();
-
-        const address = await signer.getAddress();
-        walletAddressDiv.textContent = 'Connected wallet: ' + address;
-        connectWalletBtn.style.display = 'none';
-
-        contract = new ethers.Contract(ORX_CONTRACT_ADDRESS, ERC20_ABI, provider);
-        await updateTokenBalance(address);
-        await updateTokenPrice();
-
-        window.ethereum.on('accountsChanged', async (accounts) => {
-          if (accounts.length > 0) {
-            walletAddressDiv.textContent = 'Connected wallet: ' + accounts[0];
-            await updateTokenBalance(accounts[0]);
-          } else {
-            walletAddressDiv.textContent = '';
-            tokenBalanceDiv.textContent = '';
-            connectWalletBtn.style.display = 'block';
-          }
-        });
-
-      } catch (error) {
-        walletAddressDiv.textContent = 'Connection rejected or error occurred.';
-      }
-    } else {
-      walletAddressDiv.textContent = 'Please install MetaMask or compatible wallet!';
-    }
-  }
-
-  async function updateTokenBalance(address) {
-    try {
-      const balance = await contract.balanceOf(address);
-      const decimals = await contract.decimals();
-      const formatted = ethers.utils.formatUnits(balance, decimals);
-      tokenBalanceDiv.textContent = `ORX Token Balance: ${formatted}`;
-    } catch {
-      tokenBalanceDiv.textContent = 'Failed to load token balance';
-    }
-  }
-
-  async function updateTokenPrice() {
-    try {
-      // هنوز توکن تو CoinGecko نیست، قیمت رو N/A نمایش میدیم
-      let price = 'N/A';
-      tokenPriceDiv.textContent = `Token Price: $${price}`;
-    } catch {
-      tokenPriceDiv.textContent = 'Token Price: N/A';
-    }
+    // فعلا قیمت در دسترس نیست
+    tokenPriceDiv.textContent = `Token Price: N/A`;
   }
 
   connectWalletBtn.addEventListener('click', connectWallet);

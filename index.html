@@ -3,217 +3,25 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Orbix (ORX) - Official</title>
+<title>Orbix (ORX) Wallet Connect</title>
 <style>
-  body {
-    margin: 0; padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f9fbff;
-    color: #222;
+  body { font-family: Arial, sans-serif; margin: 30px; }
+  #walletBtn {
+    padding: 10px 20px; background: #2b6cb0; color: white; border: none; border-radius: 5px; cursor: pointer;
   }
-  header {
-    background: #2b6cb0;
-    padding: 20px 40px;
-    color: white;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  header h1 {
-    margin: 0;
-    font-weight: 700;
-  }
-  button#walletBtn {
-    background: #3182ce;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    font-weight: 600;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  button#walletBtn:hover {
-    background: #2c5282;
-  }
-  main {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 0 20px;
-  }
-  section {
-    background: white;
-    border-radius: 12px;
-    padding: 30px;
-    box-shadow: 0 6px 16px rgb(50 50 93 / 0.1);
-    margin-bottom: 40px;
-  }
-  h2 {
-    color: #2b6cb0;
-    margin-bottom: 20px;
-  }
-  #walletInfo {
-    font-size: 0.9rem;
-    margin-top: 12px;
-    word-break: break-all;
-  }
-  a.button {
-    display: inline-block;
-    background: #2b6cb0;
-    color: white;
-    padding: 12px 25px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
-  }
-  a.button:hover {
-    background: #234e8a;
-  }
-  footer {
-    text-align: center;
-    padding: 20px;
-    color: #777;
-    font-size: 0.9rem;
-  }
+  #walletInfo { margin-top: 15px; font-weight: bold; }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>Orbix (ORX)</h1>
-  <button id="walletBtn">Connect Wallet</button>
-</header>
-
-<main>
-  <section>
-    <h2>About Orbix (ORX)</h2>
-    <p>Orbix (ORX) is a professional and innovative token built on the Polygon network. Join our community and explore staking, transaction fees, and more.</p>
-  </section>
-
-  <section>
-    <h2>Wallet Information</h2>
-    <div id="walletInfo">Wallet not connected.</div>
-  </section>
-
-  <section>
-    <h2>Whitepaper</h2>
-    <p>Download our comprehensive whitepaper to learn everything about Orbix’s vision, tokenomics, and roadmap.</p>
-    <a href="whitepaper.pdf" target="_blank" class="button" download>Download Whitepaper</a>
-  </section>
-</main>
-
-<footer>
-  &copy; 2025 Orbix Project. All rights reserved.
-</footer>
+<h1>Orbix (ORX) Wallet Connect</h1>
+<button id="walletBtn">Connect Wallet</button>
+<div id="walletInfo">Wallet not connected.</div>
 
 <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/web3modal@1.9.8/dist/index.js"></script>
-<script>
-  // Load WalletConnectProvider script dynamically for walletconnect
-  function loadWalletConnectProviderScript() {
-    return new Promise((resolve) => {
-      if (window.WalletConnectProvider) {
-        resolve();
-      } else {
-        const script = document.createElement('script');
-        script.src = "https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.7.8/dist/umd/index.min.js";
-        script.onload = () => resolve();
-        document.head.appendChild(script);
-      }
-    });
-  }
-
-  let web3Modal;
-  let provider;
-  let signer;
-
-  const providerOptions = {
-    walletconnect: {
-      package: window.WalletConnectProvider,
-      options: {
-        rpc: {
-          137: "https://polygon-rpc.com"
-        },
-        chainId: 137,
-      }
-    }
-  };
-
-  async function init() {
-    await loadWalletConnectProviderScript();
-
-    web3Modal = new window.Web3Modal.default({
-      cacheProvider: true,
-      providerOptions
-    });
-
-    if (web3Modal.cachedProvider) {
-      connectWallet();
-    }
-  }
-
-  async function connectWallet() {
-    try {
-      provider = await web3Modal.connect();
-      const ethersProvider = new ethers.providers.Web3Provider(provider);
-
-      const network = await ethersProvider.getNetwork();
-      if (network.chainId !== 137) {
-        alert("Please switch your wallet network to Polygon Mainnet.");
-      }
-
-      signer = ethersProvider.getSigner();
-      const address = await signer.getAddress();
-      updateUI(address);
-
-      provider.on("accountsChanged", (accounts) => {
-        if (accounts.length === 0) {
-          resetUI();
-        } else {
-          updateUI(accounts[0]);
-        }
-      });
-      provider.on("chainChanged", (chainId) => {
-        if (parseInt(chainId, 16) !== 137) {
-          alert("Please switch your wallet network to Polygon Mainnet.");
-        }
-      });
-      provider.on("disconnect", () => {
-        resetUI();
-      });
-    } catch (err) {
-      console.error("Could not get a wallet connection", err);
-    }
-  }
-
-  function updateUI(address) {
-    const walletInfo = document.getElementById("walletInfo");
-    walletInfo.textContent = `Connected: ${address}`;
-    document.getElementById("walletBtn").textContent = "Disconnect Wallet";
-  }
-
-  function resetUI() {
-    const walletInfo = document.getElementById("walletInfo");
-    walletInfo.textContent = "Wallet not connected.";
-    document.getElementById("walletBtn").textContent = "Connect Wallet";
-  }
-
-  document.getElementById("walletBtn").addEventListener("click", async () => {
-    if (provider) {
-      if (web3Modal) {
-        await web3Modal.clearCachedProvider();
-      }
-      if (provider.disconnect && typeof provider.disconnect === "function") {
-        await provider.disconnect();
-      }
-      provider = null;
-      resetUI();
-    } else {
-      connectWallet();
-    }
-  });
-
-  init();
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.7.8/dist/umd/index.min.js"></script>
+<script src="wallet.js"></script>
 
 </body>
 </html>

@@ -3,49 +3,39 @@ const providerOptions = {
   walletconnect: {
     package: window.WalletConnectProvider.default,
     options: {
-      rpc: {
-        137: "https://polygon-rpc.com"
-      }
+      infuraId: "1e389cd3f87b4e889a60f711fde4cddb"
     }
   }
 };
 
 const web3Modal = new window.Web3Modal.default({
-  network: "polygon",
-  cacheProvider: true,
+  cacheProvider: false,
   providerOptions
 });
 
-let provider;
-let signer;
-let userAddress;
-
-const ORX_ADDRESS = "0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE";
-const ORX_ABI = [
-  { "constant":true, "inputs":[{ "name":"_owner", "type":"address" }],
-    "name":"balanceOf", "outputs":[{ "name":"balance", "type":"uint256" }],
-    "type":"function"
-  },
-  { "constant":true, "inputs":[], "name":"decimals", "outputs":[{ "name":"","type":"uint8" }], "type":"function" }
+const ORX_TOKEN_ADDRESS = "0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE";
+const ORX_TOKEN_ABI = [
+  "function balanceOf(address owner) view returns (uint256)",
+  "function decimals() view returns (uint8)"
 ];
 
-document.getElementById("connectButton").onclick = async () => {
+document.getElementById("connectWallet").onclick = async () => {
   try {
-    provider = await web3Modal.connect();
-    const ethersProvider = new ethers.providers.Web3Provider(provider);
-    signer = ethersProvider.getSigner();
-    userAddress = await signer.getAddress();
-    document.getElementById("userAddress").textContent = userAddress;
+    const instance = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(instance);
+    const signer = provider.getSigner();
+    const address = await signer.getAddress();
+    const network = await provider.getNetwork();
+    document.getElementById("userAddress").innerText = address;
+    document.getElementById("networkName").innerText = network.name;
 
-    const network = await ethersProvider.getNetwork();
-    document.getElementById("networkName").textContent = network.name + " (" + network.chainId + ")";
-
-    const token = new ethers.Contract(ORX_ADDRESS, ORX_ABI, signer);
+    const token = new ethers.Contract(ORX_TOKEN_ADDRESS, ORX_TOKEN_ABI, provider);
+    const balanceRaw = await token.balanceOf(address);
     const decimals = await token.decimals();
-    const rawBalance = await token.balanceOf(userAddress);
-    const formatted = ethers.utils.formatUnits(rawBalance, decimals);
-    document.getElementById("orxBalance").textContent = formatted + " ORX";
-  } catch (e) {
-    console.error("Connection failed", e);
+    const balance = ethers.utils.formatUnits(balanceRaw, decimals);
+    document.getElementById("tokenBalance").innerText = balance;
+    document.getElementById("walletInfo").classList.remove("hidden");
+  } catch (err) {
+    console.error("Connection failed:", err);
   }
 };

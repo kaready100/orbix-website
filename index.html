@@ -2,46 +2,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Orbix (ORX) - Powering the Future of Finance</title>
-  <link rel="stylesheet" href="style.css"/>
-  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
-  <script src="https://unpkg.com/@walletconnect/web3-provider@1.6.6/dist/umd/index.min.js"></script>
-  <script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-  <script src="https://unpkg.com/web3modal@1.9.12/dist/index.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orbix (ORX) Token</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
+  <script src="https://unpkg.com/@walletconnect/web3-provider"></script>
+  <script src="https://unpkg.com/web3modal"></script>
 </head>
 <body>
   <header>
-    <h1>Orbix (ORX)</h1>
-    <p>The Next Generation Token on Polygon</p>
-    <button id="connectButton">Connect Wallet</button>
+    <div class="container">
+      <h1>Orbix (ORX)</h1>
+      <p>Your Gateway to the Future of Decentralized Finance</p>
+      <button id="connectWallet">Connect Wallet</button>
+      <div id="walletInfo" class="hidden">
+        <p><strong>Address:</strong> <span id="userAddress"></span></p>
+        <p><strong>Network:</strong> <span id="networkName"></span></p>
+        <p><strong>ORX Balance:</strong> <span id="tokenBalance"></span> ORX</p>
+      </div>
+    </div>
   </header>
 
-  <main>
-    <section class="wallet-info">
-      <div><strong>Wallet:</strong> <span id="userAddress">Not connected</span></div>
-      <div><strong>Network:</strong> <span id="networkName">-</span></div>
-      <div><strong>ORX Balance:</strong> <span id="orxBalance">-</span></div>
-    </section>
-
-    <section class="about">
-      <h2>About Orbix</h2>
-      <p>Orbix (ORX) is a next-gen ERC-20 token on the Polygon blockchain with unique features such as transaction fees, staking mechanisms, and a fixed supply of 900 million tokens. It's designed for real utility and growth.</p>
-    </section>
-
-    <section class="tokenomics">
-      <h2>Tokenomics</h2>
-      <ul>
-        <li>Total Supply: 900,000,000 ORX</li>
-        <li>2% fee on transactions (to: 0x538f5aE9...)</li>
-        <li>Staking rewards and ecosystem incentives</li>
-      </ul>
-    </section>
-  </main>
+  <section class="about">
+    <div class="container">
+      <h2>What is Orbix?</h2>
+      <p>Orbix (ORX) is a next-generation cryptocurrency built on the Polygon blockchain with features like upgradeability, staking, and smart transaction fees. Join us as we reshape the world of DeFi.</p>
+    </div>
+  </section>
 
   <footer>
-    <p>&copy; 2025 Orbix Token. Built for DeFi.</p>
+    <div class="container">
+      <p>© 2025 Orbix. All rights reserved.</p>
+    </div>
   </footer>
 
   <script src="app.js"></script>

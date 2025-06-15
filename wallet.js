@@ -1,64 +1,122 @@
-import { ethers } from "https://cdn.jsdelivr.net/npm/ethers@6.6.2/+esm";
-import Web3Modal from "https://cdn.jsdelivr.net/npm/web3modal@2.8.7/+esm";
+"use strict";
 
+// توکن ORX روی شبکه Polygon
 const ORX_TOKEN_ADDRESS = "0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE";
-
-const ERC20_ABI = [
+const ORX_ABI = [
   "function balanceOf(address) view returns (uint256)",
-  "function decimals() view returns (uint8)",
+  "function decimals() view returns (uint8)"
 ];
+
+// Web3Modal تنظیمات برای چند کیف پول
+const providerOptions = {
+  walletconnect: {
+    package: window.WalletConnectProvider.default,
+    options: {
+      infuraId: "YOUR_INFURA_ID", // اگر لازم نیست خالی بذار
+      rpc: {
+        137: "https://polygon-rpc.com"
+      },
+      chainId: 137
+    }
+  },
+  // میشه کیف پول های دیگه رو هم اضافه کرد اینجا
+};
+
+// ساخت Web3Modal
+const web3Modal = new window.Web3Modal.default({
+  cacheProvider: true,
+  providerOptions
+});
 
 let provider;
 let signer;
 let contract;
-let web3Modal;
 
-const connectBtn = document.getElementById("connectBtn");
+const btnConnect = document.getElementById("btnConnect");
+const btnDisconnect = document.getElementById("btnDisconnect");
 const walletDetails = document.getElementById("walletDetails");
-const addressSpan = document.getElementById("address");
-const balanceSpan = document.getElementById("balance");
+const walletAddressSpan = document.getElementById("walletAddress");
+const tokenBalanceSpan = document.getElementById("tokenBalance");
+const networkNameSpan = document.getElementById("networkName");
 
-async function init() {
-  web3Modal = new Web3Modal({
-    cacheProvider: false,
-    providerOptions: {
-      walletconnect: {
-        package: (await import("@walletconnect/web3-provider")).default,
-        options: {
-          infuraId: "", // میتونی اینو بگذاری یا نگذاری
-        },
-      },
-    },
-  });
-
-  connectBtn.addEventListener("click", connectWallet);
+// نمایش آدرس کوتاه شده
+function shortenAddress(address) {
+  return address.slice(0, 6) + "..." + address.slice(-4);
 }
 
 async function connectWallet() {
   try {
-    const instance = await web3Modal.connect();
+    provider = await web3Modal.connect();
+    const web3Provider = new ethers.providers.Web3Provider(provider);
+    signer = web3Provider.getSigner();
 
-    provider = new ethers.BrowserProvider(instance);
-    signer = await provider.getSigner();
+    const network = await web3Provider.getNetwork();
+    networkNameSpan.textContent = network.name === "matic" ? "Polygon Mainnet" : network.name;
 
     const userAddress = await signer.getAddress();
-    addressSpan.textContent = userAddress;
+    walletAddressSpan.textContent = shortenAddress(userAddress);
 
-    contract = new ethers.Contract(ORX_TOKEN_ADDRESS, ERC20_ABI, provider);
+    contract = new ethers.Contract(ORX_TOKEN_ADDRESS, ORX_ABI, web3Provider);
 
     const rawBalance = await contract.balanceOf(userAddress);
     const decimals = await contract.decimals();
-    const formattedBalance = ethers.formatUnits(rawBalance, decimals);
+    const formattedBalance = ethers.utils.formatUnits(rawBalance, decimals);
+    tokenBalanceSpan.textContent = Number(formattedBalance).toLocaleString();
 
-    balanceSpan.textContent = Number(formattedBalance).toLocaleString();
+    walletDetails.style.display = "block";
+    btnConnect.style.display = "none";
+    btnDisconnect.style.display = "inline-block";
 
-    walletDetails.classList.remove("hidden");
-    connectBtn.textContent = "Wallet Connected";
-    connectBtn.disabled = true;
+    // Listen for accounts change
+    provider.on("accountsChanged", (accounts) => {
+      if (accounts.length === 0) {
+        disconnectWallet();
+      } else {
+        walletAddressSpan.textContent = shortenAddress(accounts[0]);
+        updateBalance(accounts[0]);
+      }
+    });
+
+    // Listen for network changes
+    provider.on("chainChanged", () => {
+      window.location.reload();
+    });
+
   } catch (error) {
-    console.error(error);
-    alert("Failed to connect wallet. Please ensure you have MetaMask or another wallet installed.");
+    console.error("Connection failed:", error);
+    alert("Connection to wallet failed or was cancelled.");
   }
 }
 
-init();
+async function updateBalance(address) {
+  if (!contract) return;
+  try {
+    const rawBalance = await contract.balanceOf(address);
+    const decimals = await contract.decimals();
+    const formattedBalance = ethers.utils.formatUnits(rawBalance, decimals);
+    tokenBalanceSpan.textContent = Number(formattedBalance).toLocaleString();
+  } catch (error) {
+    console.error("Failed to update balance", error);
+  }
+}
+
+async function disconnectWallet() {
+  if (provider && provider.disconnect && typeof provider.disconnect === "function") {
+    await provider.disconnect();
+  }
+  await web3Modal.clearCachedProvider();
+  walletDetails.style.display = "none";
+  btnConnect.style.display = "inline-block";
+  btnDisconnect.style.display = "none";
+  walletAddressSpan.textContent = "";
+  tokenBalanceSpan.textContent = "";
+  networkNameSpan.textContent = "";
+}
+
+btnConnect.addEventListener("click", connectWallet);
+btnDisconnect.addEventListener("click", disconnectWallet);
+
+// اگر کیف پول قبلا وصل شده بود، خودکار وصل کن
+if (web3Modal.cachedProvider) {
+  connectWallet();
+}

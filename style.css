@@ -1,77 +1,193 @@
-/* Reset and base */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  background: linear-gradient(135deg, #1e2a78, #4a90e2);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: white;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+  color: #222;
   min-height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  flex-direction: column;
 }
 
 .container {
-  background: rgba(255 255 255 / 0.1);
-  backdrop-filter: blur(15px);
-  border-radius: 15px;
-  padding: 30px 40px;
-  max-width: 380px;
-  width: 100%;
-  text-align: center;
-  box-shadow: 0 0 15px rgba(74, 144, 226, 0.5);
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-h1 {
-  margin-bottom: 25px;
-  font-weight: 700;
-  font-size: 1.8rem;
+header {
+  background: rgba(255 255 255 / 0.95);
+  padding: 20px 0;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.btn {
-  background: #3466ff;
-  border: none;
-  padding: 14px 30px;
-  border-radius: 50px;
-  color: white;
+header h1 {
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1.8rem;
+  color: #222;
+}
+
+header h1 span {
+  color: #fdbb2d;
+}
+
+nav a {
+  margin-left: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  color: #222;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #fdbb2d;
+}
+
+main {
+  flex-grow: 1;
+  padding: 60px 0;
+}
+
+#hero {
+  text-align: center;
+  color: #fff;
+  margin-bottom: 50px;
+}
+
+#hero h2 {
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+#hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.3);
+}
+
+#connectBtn {
+  background: #fdbb2d;
+  color: #222;
+  border: none;
+  font-weight: 700;
+  font-size: 1.2rem;
+  padding: 14px 36px;
+  border-radius: 30px;
   cursor: pointer;
+  box-shadow: 0 4px 14px rgba(253,187,45,0.7);
   transition: background 0.3s ease;
-  user-select: none;
 }
 
-.btn:hover {
-  background: #2a53d9;
+#connectBtn:hover {
+  background: #e6a719;
 }
 
-#walletSection {
-  margin-top: 30px;
+.info-section {
+  background: rgba(255 255 255 / 0.95);
+  padding: 30px 40px;
+  margin-bottom: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.1);
+  color: #222;
+}
+
+.info-section h3 {
+  margin-top: 0;
+  font-weight: 600;
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+}
+
+.info-section p,
+.info-section ul {
   font-size: 1.1rem;
-  line-height: 1.5;
+  line-height: 1.6;
+}
+
+.info-section ul {
+  padding-left: 20px;
+}
+
+.info-section ul li {
+  margin-bottom: 12px;
+}
+
+.wallet-details {
+  font-size: 1rem;
+  word-break: break-all;
+}
+
+.wallet-details p {
+  margin: 8px 0;
+}
+
+.wallet-details strong {
+  color: #fdbb2d;
 }
 
 .hidden {
   display: none;
 }
 
-.footer {
-  margin-top: 40px;
-}
-
 .whitepaper-link {
-  color: #87b5ff;
-  font-weight: 600;
+  display: inline-block;
+  background: #222;
+  color: #fdbb2d;
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: 30px;
   text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.3s ease;
+  box-shadow: 0 4px 14px rgba(253,187,45,0.8);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .whitepaper-link:hover {
-  border-color: #87b5ff;
+  background: #fdbb2d;
+  color: #222;
+}
+
+footer {
+  background: rgba(0,0,0,0.15);
+  padding: 15px 0;
+  text-align: center;
+  font-weight: 600;
+  color: #222;
+  box-shadow: inset 0 1px 3px rgba(255,255,255,0.25);
+}
+
+/* Responsive */
+
+@media (max-width: 640px) {
+  header h1 {
+    font-size: 1.4rem;
+  }
+  nav a {
+    margin-left: 15px;
+    font-size: 0.9rem;
+  }
+  #hero h2 {
+    font-size: 2rem;
+  }
+  #connectBtn {
+    width: 100%;
+    padding: 14px 0;
+  }
+  .info-section {
+    padding: 20px;
+  }
 }

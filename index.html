@@ -1,51 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Orbix (ORX) - Connect Wallet & Token Info</title>
-<link rel="stylesheet" href="style.css" />
-<!-- Web3Modal core -->
-<script src="https://unpkg.com/web3modal@1.9.12/dist/index.js"></script>
-<!-- Ethers.js -->
-<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Orbix (ORX) - Connect Your Wallet</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<header>
-  <h1>Orbix (ORX) Token</h1>
-  <p>Decentralized and Upgradeable Token on Polygon Network</p>
-</header>
+  <header>
+    <div class="container">
+      <h1>Orbix <span>ORX</span></h1>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#goals">Goals</a>
+        <a href="#wallet">Wallet</a>
+        <a href="whitepaper.pdf" target="_blank" rel="noopener noreferrer">Whitepaper</a>
+      </nav>
+    </div>
+  </header>
 
-<section class="wallet-section">
-  <button id="btnConnect">Connect Wallet</button>
-  <button id="btnDisconnect" style="display:none;">Disconnect Wallet</button>
+  <main>
+    <section id="hero" class="container">
+      <h2>Welcome to Orbix (ORX)</h2>
+      <p>Connect your wallet to start interacting with Orbix on Polygon network.</p>
+      <button id="connectBtn">Connect Wallet</button>
+    </section>
 
-  <div id="walletDetails" style="display:none;">
-    <p><strong>Connected Wallet Address:</strong> <span id="walletAddress"></span></p>
-    <p><strong>ORX Token Balance:</strong> <span id="tokenBalance"></span></p>
-    <p><strong>Network:</strong> <span id="networkName"></span></p>
-  </div>
-</section>
+    <section id="about" class="container info-section">
+      <h3>About Orbix</h3>
+      <p>Orbix (ORX) is a fast, scalable Polygon-based ERC-20 token with integrated staking, fixed transaction fees, and community governance.</p>
+    </section>
 
-<section class="about-section">
-  <h2>About Orbix (ORX)</h2>
-  <p>Orbix is a next-gen upgradeable ERC20 token with staking, transaction fees, and rewarding features built on Polygon. Designed for scalability, security, and community-driven growth, ORX empowers holders with passive income through staking pools and transaction rewards.</p>
-  <ul>
-    <li>🪙 Total Supply: 900 Million ORX</li>
-    <li>⚡ Transaction Fee: 2% sent to the burn address</li>
-    <li>🔒 Staking Pools with fixed returns</li>
-    <li>🔄 Fully Upgradeable contract architecture</li>
-    <li>🌐 Compatible with major wallets: MetaMask, Trust Wallet, WalletConnect</li>
-  </ul>
-  <a href="whitepaper.pdf" target="_blank" class="btn-whitepaper">Read Whitepaper (PDF)</a>
-</section>
+    <section id="goals" class="container info-section">
+      <h3>Our Goals</h3>
+      <ul>
+        <li>Fixed 2% transaction fee supporting staking rewards.</li>
+        <li>Community driven governance and transparency.</li>
+        <li>Fast, low-cost transactions on Polygon.</li>
+        <li>Sustainable token ecosystem.</li>
+      </ul>
+    </section>
 
-<footer>
-  <p>© 2025 Orbix Token. All rights reserved.</p>
-</footer>
+    <section id="wallet" class="container info-section">
+      <h3>Your Wallet Info</h3>
+      <div id="walletDetails" class="wallet-details hidden">
+        <p><strong>Address:</strong> <span id="address"></span></p>
+        <p><strong>ORX Balance:</strong> <span id="balance"></span></p>
+      </div>
+    </section>
 
-<script src="wallet.js"></script>
+    <section id="whitepaper" class="container info-section" style="text-align:center;">
+      <a href="whitepaper.pdf" target="_blank" class="whitepaper-link">📄 Download Whitepaper</a>
+    </section>
+  </main>
 
+  <footer>
+    <div class="container">
+      <p>© 2025 Orbix. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script type="module" src="wallet.js"></script>
 </body>
 </html>

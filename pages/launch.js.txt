@@ -1,0 +1,40 @@
+import Layout from '../components/Layout';
+
+export default function LaunchPage() {
+  return (
+    <Layout>
+      <div style={{
+        maxWidth: '800px',
+        margin: '50px auto',
+        padding: '30px',
+        background: 'white',
+        borderRadius: '16px',
+        boxShadow: '0 0 20px rgba(0,0,0,0.05)',
+        fontFamily: "'Inter', sans-serif",
+        color: '#111827', // رنگ متن اصلی سایت
+        lineHeight: '1.8',
+      }}>
+        <h1 style={{ color: '#2563eb', marginBottom: '20px' }}>🚀 Orbix (ORX) Official Token Launch</h1>
+        <p><strong>Launch Date:</strong> June 15, 2025</p>
+        <p><strong>Blockchain:</strong> Polygon (MATIC)</p>
+        <p><strong>Token Contract Address:</strong><br />
+          <code style={{
+            backgroundColor: '#f3f4f6',
+            padding: '4px 8px',
+            borderRadius: '6px',
+            fontFamily: 'monospace',
+            userSelect: 'all',
+          }}>0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE</code>
+        </p>
+        <p><strong>Buy ORX on:</strong> <a href="https://app.uniswap.org/#/swap?outputCurrency=0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE&chain=polygon" target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'underline' }}>Uniswap</a></p>
+        <p><strong>About Orbix:</strong><br />
+          Orbix (ORX) is a next-generation decentralized token built on the Polygon blockchain.  
+          It empowers users through low-fee transactions, fixed staking returns, and a growing DeFi ecosystem.  
+          ORX is designed to be a sustainable and community-driven financial asset.
+        </p>
+        <p><strong>Whitepaper:</strong> <a href="/whitepaper.pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'underline' }}>View PDF</a></p>
+        <p><strong>Official Website:</strong> <a href="https://orbix-phi.vercel.app" target="_blank" rel="noopener noreferrer" style={{ color: '#2563eb', textDecoration: 'underline' }}>orbix-phi.vercel.app</a></p>
+      </div>
+    </Layout>
+  );
+}

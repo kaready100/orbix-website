@@ -22,7 +22,12 @@ async function init() {
   web3Modal = new Web3Modal({
     cacheProvider: false,
     providerOptions: {
-      // می‌تونی اینجا گزینه‌های اضافی مثل WalletConnect اضافه کنی
+      walletconnect: {
+        package: (await import("@walletconnect/web3-provider")).default,
+        options: {
+          infuraId: "", // میتونی اینو بگذاری یا نگذاری
+        },
+      },
     },
   });
 
@@ -32,6 +37,7 @@ async function init() {
 async function connectWallet() {
   try {
     const instance = await web3Modal.connect();
+
     provider = new ethers.BrowserProvider(instance);
     signer = await provider.getSigner();
 
@@ -51,7 +57,7 @@ async function connectWallet() {
     connectBtn.disabled = true;
   } catch (error) {
     console.error(error);
-    alert("Connection failed. Please try again.");
+    alert("Failed to connect wallet. Please ensure you have MetaMask or another wallet installed.");
   }
 }
 

@@ -3,16 +3,18 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Orbix (ORX) - Wallet Connect Demo</title>
+<title>Orbix (ORX) - Connect Wallet & Token Info</title>
 <link rel="stylesheet" href="style.css" />
-<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
-<script src="https://unpkg.com/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
+<!-- Web3Modal core -->
 <script src="https://unpkg.com/web3modal@1.9.12/dist/index.js"></script>
+<!-- Ethers.js -->
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.min.js"></script>
 </head>
 <body>
 
 <header>
-  <h1>Orbix (ORX) Token Wallet Connect</h1>
+  <h1>Orbix (ORX) Token</h1>
+  <p>Decentralized and Upgradeable Token on Polygon Network</p>
 </header>
 
 <section class="wallet-section">
@@ -20,11 +22,28 @@
   <button id="btnDisconnect" style="display:none;">Disconnect Wallet</button>
 
   <div id="walletDetails" style="display:none;">
-    <p><strong>Address:</strong> <span id="walletAddress"></span></p>
-    <p><strong>ORX Balance:</strong> <span id="tokenBalance"></span></p>
+    <p><strong>Connected Wallet Address:</strong> <span id="walletAddress"></span></p>
+    <p><strong>ORX Token Balance:</strong> <span id="tokenBalance"></span></p>
     <p><strong>Network:</strong> <span id="networkName"></span></p>
   </div>
 </section>
+
+<section class="about-section">
+  <h2>About Orbix (ORX)</h2>
+  <p>Orbix is a next-gen upgradeable ERC20 token with staking, transaction fees, and rewarding features built on Polygon. Designed for scalability, security, and community-driven growth, ORX empowers holders with passive income through staking pools and transaction rewards.</p>
+  <ul>
+    <li>🪙 Total Supply: 900 Million ORX</li>
+    <li>⚡ Transaction Fee: 2% sent to the burn address</li>
+    <li>🔒 Staking Pools with fixed returns</li>
+    <li>🔄 Fully Upgradeable contract architecture</li>
+    <li>🌐 Compatible with major wallets: MetaMask, Trust Wallet, WalletConnect</li>
+  </ul>
+  <a href="whitepaper.pdf" target="_blank" class="btn-whitepaper">Read Whitepaper (PDF)</a>
+</section>
+
+<footer>
+  <p>© 2025 Orbix Token. All rights reserved.</p>
+</footer>
 
 <script src="wallet.js"></script>
 

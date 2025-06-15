@@ -1,52 +1,32 @@
 body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #0f1117;
-  color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-.container {
-  background: #1b1e28;
-  padding: 30px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 400px;
+  font-family: Arial, sans-serif;
+  background: #222;
+  color: #eee;
   text-align: center;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+  padding: 40px;
 }
 
 button {
-  background: #f4b940;
+  background: #fdbc3d;
   border: none;
-  padding: 12px 24px;
-  margin: 12px auto;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
+  padding: 12px 25px;
+  margin: 10px;
+  border-radius: 25px;
   font-weight: bold;
-  transition: background 0.3s ease;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background: #e1a930;
+  background: #dbab33;
 }
 
 #walletDetails {
   margin-top: 20px;
-  font-size: 0.95rem;
-  line-height: 1.5;
+  font-size: 1.2rem;
 }
 
-@media (max-width: 500px) {
-  .container {
-    padding: 20px;
-  }
-
-  button {
-    width: 100%;
-  }
+#walletAddress {
+  font-family: monospace;
+  color: #fdbc3d;
 }

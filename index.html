@@ -2,120 +2,72 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Orbix Token (ORX)</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Orbix (ORX) Token Verification & Launch Announcement</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+      color: #222;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .container {
+      background: rgba(255 255 255 / 0.95);
+      border-radius: 12px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 4px 14px rgb(0 0 0 / 0.15);
+      padding: 30px 40px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    h1 {
+      font-weight: 700;
+      margin-bottom: 25px;
+      color: #1a2a6c;
+    }
+    h2 {
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #b21f1f;
+    }
+    p {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      color: #222;
+    }
+    a {
+      color: #fdbb2d;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .highlight {
+      font-weight: 700;
+      color: #b21f1f;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <div class="container">
-      <h1><span>Orbix</span> Token</h1>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="launch.html">Launch Info</a>
-        <a href="verify.html">Verification</a>
-        <a href="whitepaper.pdf" target="_blank">Whitepaper</a>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <div class="container">
-      <section id="hero">
-        <h2>Welcome to the Orbix (ORX) Token</h2>
-        <p>Next-generation decentralized token on the Polygon network, with staking, rewards, and upgradeable contracts.</p>
-        <button id="connectWallet">Connect Wallet</button>
-      </section>
-
-      <section class="info-section">
-        <h3>Token Information</h3>
-        <ul>
-          <li><strong>Name:</strong> Orbix</li>
-          <li><strong>Symbol:</strong> ORX</li>
-          <li><strong>Network:</strong> Polygon</li>
-          <li><strong>Contract Address:</strong> 0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE</li>
-        </ul>
-        <div class="wallet-details">
-          <p><strong>Your Balance:</strong> <span id="balance">0 ORX</span></p>
-        </div>
-      </section>
-
-      <section class="info-section">
-        <h3>Launch Announcement</h3>
-        <p>
-          Official ORX Token Generation Event (TGE) scheduled for <strong>July 1st, 2025</strong> at <strong>12:00 PM UTC</strong>.
-          Contract verified and deployed on Polygon:
-          <a href="https://polygonscan.com/address/0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE" target="_blank">View on PolygonScan</a>.
-        </p>
-      </section>
-
-      <section class="info-section">
-        <h3>Verification for Listing</h3>
-        <p>
-          ORX has officially submitted verification and listing preview request.<br />
-          <a href="https://example.com/orbix-verification-announcement" target="_blank">
-            View Official Announcement
-          </a>
-        </p>
-      </section>
-    </div>
-  </main>
-
-  <footer>
-    <div class="container">
-      &copy; 2025 Orbix Token. All rights reserved.
-    </div>
-  </footer>
-
-  <script type="module">
-    import Web3Modal from "https://unpkg.com/web3modal";
-    const providerOptions = {};
-    const web3Modal = new Web3Modal.default({
-      cacheProvider: false,
-      providerOptions
-    });
-
-    let web3;
-    let selectedAccount;
-    const ORX_TOKEN_ADDRESS = "0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE";
-    const ERC20_ABI = [
-      {
-        constant: true,
-        inputs: [{ name: "_owner", type: "address" }],
-        name: "balanceOf",
-        outputs: [{ name: "balance", type: "uint256" }],
-        type: "function",
-      },
-      {
-        constant: true,
-        name: "decimals",
-        inputs: [],
-        outputs: [{ name: "", type: "uint8" }]
-      }
-    ];
-
-    async function connectWallet() {
-      try {
-        const provider = await web3Modal.connect();
-        web3 = new Web3(provider);
-        const accounts = await web3.eth.getAccounts();
-        selectedAccount = accounts[0];
-        document.getElementById("connectWallet").innerText =
-          selectedAccount.slice(0, 6) + "..." + selectedAccount.slice(-4);
-
-        const contract = new web3.eth.Contract(ERC20_ABI, ORX_TOKEN_ADDRESS);
-        const balance = await contract.methods.balanceOf(selectedAccount).call();
-        const decimals = await contract.methods.decimals().call();
-        const formatted = (balance / 10 ** decimals).toFixed(6);
-
-        document.getElementById("balance").innerText = `${formatted} ORX`;
-      } catch (error) {
-        console.error("Wallet connect failed", error);
-      }
-    }
-
-    document.getElementById("connectWallet").addEventListener("click", connectWallet);
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
-</body>
-</html>
+  <div class="container" role="main">
+    <h1>Orbix (ORX) Token Verification & Launch Announcement</h1>
+    
+    <section aria-labelledby="launch-title">
+      <h2 id="launch-title">Official Launch Announcement</h2>
+      <p>
+        The Orbix (ORX) token will officially launch on <span class="highlight">September 21, 2025</span>. 
+        This date marks the Token Generation Event (TGE) where ORX becomes publicly available.
+      </p>
+      <p>
+        For more details, please visit the official launch announcement: 
+        <a href="https://orbix.io/launch-announcement" target="_blank" rel="noopener noreferrer">
+          https://orbix.io/launch-announcement

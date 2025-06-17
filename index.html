@@ -2,43 +2,120 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Orbix ORX Token</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Orbix Token (ORX)</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/web3@1.8.0/dist/web3.min.js"></script>
-  <script src="https://unpkg.com/web3modal"></script>
 </head>
 <body>
   <header>
     <div class="container">
-      <h1>Orbix <span>ORX</span></h1>
+      <h1><span>Orbix</span> Token</h1>
       <nav>
         <a href="index.html">Home</a>
         <a href="launch.html">Launch Info</a>
-        <a href="verify.html">Verify</a>
-        <a class="whitepaper-link" href="whitepaper.pdf" target="_blank" rel="noopener noreferrer">Whitepaper</a>
+        <a href="verify.html">Verification</a>
+        <a href="whitepaper.pdf" target="_blank">Whitepaper</a>
       </nav>
     </div>
   </header>
 
-  <main class="container">
-    <section id="hero">
-      <h2>Welcome to Orbix (ORX) Token</h2>
-      <p>The official ORX token on Polygon network with staking, fees, and upgradeable contract.</p>
-      <button id="connectWallet">Connect Wallet</button>
-      <p id="balance" class="wallet-details"></p>
-    </section>
+  <main>
+    <div class="container">
+      <section id="hero">
+        <h2>Welcome to the Orbix (ORX) Token</h2>
+        <p>Next-generation decentralized token on the Polygon network, with staking, rewards, and upgradeable contracts.</p>
+        <button id="connectWallet">Connect Wallet</button>
+      </section>
 
-    <section class="info-section">
-      <h3>About Orbix (ORX)</h3>
-      <p>Orbix (ORX) is an innovative crypto token launched on Polygon with staking rewards and a fixed 2% transaction fee to the project wallet.</p>
-    </section>
+      <section class="info-section">
+        <h3>Token Information</h3>
+        <ul>
+          <li><strong>Name:</strong> Orbix</li>
+          <li><strong>Symbol:</strong> ORX</li>
+          <li><strong>Network:</strong> Polygon</li>
+          <li><strong>Contract Address:</strong> 0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE</li>
+        </ul>
+        <div class="wallet-details">
+          <p><strong>Your Balance:</strong> <span id="balance">0 ORX</span></p>
+        </div>
+      </section>
+
+      <section class="info-section">
+        <h3>Launch Announcement</h3>
+        <p>
+          Official ORX Token Generation Event (TGE) scheduled for <strong>July 1st, 2025</strong> at <strong>12:00 PM UTC</strong>.
+          Contract verified and deployed on Polygon:
+          <a href="https://polygonscan.com/address/0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE" target="_blank">View on PolygonScan</a>.
+        </p>
+      </section>
+
+      <section class="info-section">
+        <h3>Verification for Listing</h3>
+        <p>
+          ORX has officially submitted verification and listing preview request.<br />
+          <a href="https://example.com/orbix-verification-announcement" target="_blank">
+            View Official Announcement
+          </a>
+        </p>
+      </section>
+    </div>
   </main>
 
   <footer>
-    Orbix © 2025. All rights reserved.
+    <div class="container">
+      &copy; 2025 Orbix Token. All rights reserved.
+    </div>
   </footer>
 
-  <script src="wallet.js"></script>
+  <script type="module">
+    import Web3Modal from "https://unpkg.com/web3modal";
+    const providerOptions = {};
+    const web3Modal = new Web3Modal.default({
+      cacheProvider: false,
+      providerOptions
+    });
+
+    let web3;
+    let selectedAccount;
+    const ORX_TOKEN_ADDRESS = "0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE";
+    const ERC20_ABI = [
+      {
+        constant: true,
+        inputs: [{ name: "_owner", type: "address" }],
+        name: "balanceOf",
+        outputs: [{ name: "balance", type: "uint256" }],
+        type: "function",
+      },
+      {
+        constant: true,
+        name: "decimals",
+        inputs: [],
+        outputs: [{ name: "", type: "uint8" }]
+      }
+    ];
+
+    async function connectWallet() {
+      try {
+        const provider = await web3Modal.connect();
+        web3 = new Web3(provider);
+        const accounts = await web3.eth.getAccounts();
+        selectedAccount = accounts[0];
+        document.getElementById("connectWallet").innerText =
+          selectedAccount.slice(0, 6) + "..." + selectedAccount.slice(-4);
+
+        const contract = new web3.eth.Contract(ERC20_ABI, ORX_TOKEN_ADDRESS);
+        const balance = await contract.methods.balanceOf(selectedAccount).call();
+        const decimals = await contract.methods.decimals().call();
+        const formatted = (balance / 10 ** decimals).toFixed(6);
+
+        document.getElementById("balance").innerText = `${formatted} ORX`;
+      } catch (error) {
+        console.error("Wallet connect failed", error);
+      }
+    }
+
+    document.getElementById("connectWallet").addEventListener("click", connectWallet);
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 </body>
 </html>

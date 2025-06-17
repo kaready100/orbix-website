@@ -3,71 +3,75 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Orbix (ORX) Token Verification & Launch Announcement</title>
+  <title>Orbix (ORX) Token</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-      color: #222;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-    .container {
-      background: rgba(255 255 255 / 0.95);
-      border-radius: 12px;
-      max-width: 600px;
-      width: 100%;
-      box-shadow: 0 4px 14px rgb(0 0 0 / 0.15);
-      padding: 30px 40px;
-      box-sizing: border-box;
-      text-align: center;
-    }
-    h1 {
-      font-weight: 700;
-      margin-bottom: 25px;
-      color: #1a2a6c;
-    }
-    h2 {
-      font-weight: 600;
-      margin-bottom: 15px;
-      color: #b21f1f;
-    }
-    p {
-      font-size: 1.1rem;
-      line-height: 1.5;
-      margin-bottom: 20px;
-      color: #222;
-    }
-    a {
-      color: #fdbb2d;
-      font-weight: 600;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    .highlight {
-      font-weight: 700;
-      color: #b21f1f;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container" role="main">
-    <h1>Orbix (ORX) Token Verification & Launch Announcement</h1>
-    
-    <section aria-labelledby="launch-title">
-      <h2 id="launch-title">Official Launch Announcement</h2>
+  <header>
+    <div class="container">
+      <h1>Orbix <span>(ORX)</span></h1>
+      <nav>
+        <a href="#hero">Home</a>
+        <a href="#info">About</a>
+        <a href="#launch">Launch</a>
+        <a href="#verification">Verification</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="hero">
+      <h2>Welcome to Orbix Token</h2>
+      <p>Orbix (ORX) is a revolutionary ERC-20 token on the Polygon network, designed for staking, fees, and a fixed supply of 900 million tokens.</p>
+      <button id="connectWallet">Connect Wallet</button>
+      <div id="balance" class="wallet-details"></div>
+    </section>
+
+    <section id="info" class="info-section">
+      <h3>About Orbix</h3>
+      <p>Orbix is built for efficiency and profitability with features like transaction fees sent to a fixed address, staking pools, and upgradeability on Polygon.</p>
+      <ul>
+        <li>Token symbol: ORX</li>
+        <li>Total Supply: 900,000,000 ORX</li>
+        <li>Network: Polygon (Matic)</li>
+        <li>Features: Staking, Fees, Minting, Upgradeable</li>
+      </ul>
+    </section>
+
+    <section id="launch" class="info-section">
+      <h3>Launch Announcement</h3>
       <p>
-        The Orbix (ORX) token will officially launch on <span class="highlight">September 21, 2025</span>. 
-        This date marks the Token Generation Event (TGE) where ORX becomes publicly available.
+        Orbix (ORX) token will officially launch its Token Generation Event (TGE) on <strong>July 15, 2025</strong>. 
+        Stay tuned for buying and selling availability on major decentralized exchanges.
       </p>
       <p>
-        For more details, please visit the official launch announcement: 
-        <a href="https://orbix.io/launch-announcement" target="_blank" rel="noopener noreferrer">
-          https://orbix.io/launch-announcement
+        Launch details and updates will be posted here and on our official social media channels.
+      </p>
+    </section>
+
+    <section id="verification" class="info-section">
+      <h3>Verification & Official Links</h3>
+      <p>Verify the official project status and legitimacy here: 
+        <a href="https://polygonscan.com/token/0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE" target="_blank" rel="noopener noreferrer">
+          https://polygonscan.com/token/0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE
+        </a>
+      </p>
+      <p>
+        Public Verification Link: 
+        <a href="https://polygonscan.com/token/0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE" target="_blank" rel="noopener noreferrer">
+          https://polygonscan.com/token/0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE
+        </a>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    Orbix Token &copy; 2025. All rights reserved.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
+  <script src="https://unpkg.com/web3modal"></script>
+  <script src="wallet.js"></script>
+</body>
+</html>

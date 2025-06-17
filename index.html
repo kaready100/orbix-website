@@ -2,65 +2,58 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Orbix (ORX) - Connect Your Wallet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Orbix (ORX) - Official Token Page</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <header>
-    <div class="container">
-      <h1>Orbix <span>ORX</span></h1>
-      <nav>
-        <a href="#about">About</a>
-        <a href="#goals">Goals</a>
-        <a href="#wallet">Wallet</a>
-        <a href="whitepaper.pdf" target="_blank" rel="noopener noreferrer">Whitepaper</a>
-      </nav>
-    </div>
+  <header class="container">
+    <h1>Orbix <span>(ORX)</span></h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="verify.html">Verify</a>
+      <a href="launch.html">Launch</a>
+      <a href="whitepaper.pdf" target="_blank">Whitepaper</a>
+    </nav>
   </header>
 
-  <main>
-    <section id="hero" class="container">
+  <main class="container">
+    <section id="hero">
       <h2>Welcome to Orbix (ORX)</h2>
-      <p>Connect your wallet to start interacting with Orbix on Polygon network.</p>
-      <button id="connectBtn">Connect Wallet</button>
+      <p>The official token on Polygon with staking, fees, and utility integration.</p>
+      <button id="connectWallet">Connect Wallet</button>
+      <p id="balance" style="margin-top: 15px;"></p>
     </section>
 
-    <section id="about" class="container info-section">
+    <section class="info-section">
       <h3>About Orbix</h3>
-      <p>Orbix (ORX) is a fast, scalable Polygon-based ERC-20 token with integrated staking, fixed transaction fees, and community governance.</p>
-    </section>
-
-    <section id="goals" class="container info-section">
-      <h3>Our Goals</h3>
+      <p>Orbix (ORX) is a Polygon-based ERC-20 token designed for scalability, staking, and real-world utility.</p>
       <ul>
-        <li>Fixed 2% transaction fee supporting staking rewards.</li>
-        <li>Community driven governance and transparency.</li>
-        <li>Fast, low-cost transactions on Polygon.</li>
-        <li>Sustainable token ecosystem.</li>
+        <li>Token Contract: <strong>0xF4EDC72777e2AD20a02caA72b7BF51B7281BdAdE</strong></li>
+        <li>Total Supply: 900,000,000 ORX</li>
+        <li>Network: Polygon</li>
+        <li>Fixed 2% transaction fee (sent to a fee wallet)</li>
       </ul>
     </section>
 
-    <section id="wallet" class="container info-section">
-      <h3>Your Wallet Info</h3>
-      <div id="walletDetails" class="wallet-details hidden">
-        <p><strong>Address:</strong> <span id="address"></span></p>
-        <p><strong>ORX Balance:</strong> <span id="balance"></span></p>
-      </div>
+    <section class="info-section">
+      <h3>Launch Announcement</h3>
+      <p>The official launch of Orbix (ORX) is scheduled and confirmed. You can verify the announcement here:</p>
+      <a href="https://twitter.com/orbixofficial/status/1799999999999999999" target="_blank" class="whitepaper-link">Official Launch Tweet</a>
     </section>
 
-    <section id="whitepaper" class="container info-section" style="text-align:center;">
-      <a href="whitepaper.pdf" target="_blank" class="whitepaper-link">📄 Download Whitepaper</a>
+    <section class="info-section">
+      <h3>Public Verification</h3>
+      <p>We've submitted our listing preview request. Public proof of submission is available below:</p>
+      <a href="https://twitter.com/orbixofficial/status/1798888888888888888" target="_blank" class="whitepaper-link">Verification Tweet</a>
     </section>
   </main>
 
   <footer>
-    <div class="container">
-      <p>© 2025 Orbix. All rights reserved.</p>
-    </div>
+    &copy; 2025 Orbix Token. All rights reserved.
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
   <script type="module" src="wallet.js"></script>
 </body>
 </html>

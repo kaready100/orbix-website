@@ -23,8 +23,8 @@ const ERC20_ABI = [
     name: "decimals",
     inputs: [],
     outputs: [{ name: "", type: "uint8" }],
-    type: "function"
-  }
+    type: "function",
+  },
 ];
 
 async function connectWallet() {
@@ -40,7 +40,7 @@ async function connectWallet() {
     const contract = new web3.eth.Contract(ERC20_ABI, ORX_TOKEN_ADDRESS);
     const balance = await contract.methods.balanceOf(selectedAccount).call();
     const decimals = await contract.methods.decimals().call();
-    const formatted = (balance / 10 ** decimals).toFixed(8);
+    const formatted = (balance / 10 ** decimals).toFixed(6); // دقت بالا
 
     document.getElementById("balance").innerText = `${formatted} ORX`;
   } catch (error) {
